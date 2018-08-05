@@ -3,3 +3,6 @@
 geckodriver.log
 __pycache__
 _data
+_site
+.sass-cache
+.jekyll-metadata
