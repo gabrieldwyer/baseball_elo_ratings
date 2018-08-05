@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "margin og vicorty"
+title:  "Margin of Victory"
 date:   2018-08-05 23:06:32 +1000
 ---
 
