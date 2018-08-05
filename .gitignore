@@ -1,8 +1,14 @@
+# ignore these folders
 .DS_Store
 .offline
 geckodriver.log
 __pycache__
+
+# don't upload the data
 _data
+_data_working
+
+# jekyll created .gitignore file
 _site
 .sass-cache
 .jekyll-metadata
