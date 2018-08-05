@@ -1,0 +1,5 @@
+.DS_Store
+.offline
+geckodriver.log
+__pycache__
+_data
