@@ -2,7 +2,7 @@
 layout: post
 title:  "My Little Data Project Goes Online"
 date:   2018-08-05 23:06:32 +1000
-
+categories: baseball_elo_ratings
 ---
 
 This is intended to be the ‘Hello, World’ of this project page.
