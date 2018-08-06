@@ -2,6 +2,7 @@
 layout: post
 title:  "My Little Data Project Goes Online"
 date:   2018-08-05 23:06:32 +1000
+
 ---
 
 This is intended to be the ‘Hello, World’ of this project page.
@@ -16,4 +17,4 @@ In essence, this project is very simple. I’m using an elo model to predict the
 
 The perfectionist within me causes me to struggle with pushing things forward. I want them to be finished before anybody sees them. It can cause me to falter before the very first step. So often, all that needs to be done is to start, and the rest follows. By moving this project to an online space, I’m hoping to force myself to present honestly unfinished work. There’s also an element of nurturing pride in craft. Hello world, I made this thing.
 
-You can find the code used both to host this page, and to run the model, [here](https://github.com/gabrieldwyer/mwbl_elo_ratings).
+You can find the code used both to host this page, and to run the model, [here](https://github.com/gabrieldwyer/baseball_elo_ratings).
