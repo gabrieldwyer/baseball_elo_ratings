@@ -8,9 +8,10 @@
 # - scrape weather from the closest weather station to
 # - treat byes as NOT A TEAM
 
+import os
+
 import matplotlib.pyplot as plt
 import pandas as pd
-import os
 
 # initalising functions
 
@@ -61,7 +62,7 @@ def input_grade(grade_input=False):
 # define classes
 
 
-class League():
+class League:
 
     def __init__(self, year, grade):
         self.year = year
@@ -81,16 +82,7 @@ class League():
 
         print(self.grade, self.year)
 
-    def print_unordered_standings(self):
-        """Print team values."""
-
-        print('-')
-        print('TEAM \t\t POINTS R% ELO WINS LOSSES DRAWS')
-        print('-')
-        for team in self.teams:
-            Team.print_most(self.teams[team])
-
-    def print_ordered_standings(self):
+    def print_standings(self):
         """Find the currrent standings and print them in order of points. Break ties with R%."""
 
         print('-')
@@ -99,7 +91,7 @@ class League():
         print('TEAM', '\t\t', 'POINTS', 'R%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
         team_points = {}
         for team in self.teams.values():
-            team_points[team] = [team.points + 0.1*team.runs_percentage]
+            team_points[team] = [team.points + 0.1 * team.runs_percentage]
         # Run percantage is the second sorting criteria of the standings
         # 0 =< R% =< 1, and higher R% is better
         # thus it can simply be added to the points integer to create a composite sorting value
@@ -142,9 +134,9 @@ def get_elo(self):
     if not self.returning:
         return 1500
     else:
-        previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year-1), index_col=0)
+        previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year - 1), index_col=0)
         previous_elo = previous_standings.elo.loc[self.name]
-        return previous_elo/2 + 750  # regress elo halfway to the mean
+        return previous_elo / 2 + 750  # regress elo halfway to the mean
 
 
 class Team(Club):
@@ -172,7 +164,7 @@ class Team(Club):
         """Calculate the run percentage."""
 
         try:
-            return 0.500 + 0.500*((self.runs_scored-self.runs_allowed)/(self.runs_scored+self.runs_allowed))
+            return 0.500 + 0.500 * ((self.runs_scored - self.runs_allowed) / (self.runs_scored + self.runs_allowed))
         except ZeroDivisionError:
             return 0.500
 
@@ -181,7 +173,7 @@ class Team(Club):
         """Calculate the win percentage."""
 
         try:
-            return 0.500 + 0.500*((self.won-self.lost)/(self.won+self.lost))
+            return 0.500 + 0.500 * ((self.won - self.lost) / (self.won + self.lost))
         except ZeroDivisionError:
             return 0.500
 
@@ -196,7 +188,7 @@ class Team(Club):
         """Check to see if the Team object played in the same grade in the previous year."""
 
         try:
-            previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year-1), index_col=0)
+            previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year - 1), index_col=0)
         except FileNotFoundError:
             return False
 
@@ -208,19 +200,19 @@ class Team(Club):
     def print_elo(self):
         """Print the formatted elo rating of the team."""
 
-        print(self.name.upper(), ' '*(20-len(self.name)), self.elo)
+        print(self.name.upper(), ' ' * (20 - len(self.name)), self.elo)
 
     def print_most(self):
         """Print the formatted main attributes of the team."""
 
-        print(self.name.upper(), ' '*(23-len(self.name)), self.points,
+        print(self.name.upper(), ' ' * (23 - len(self.name)), self.points,
               "%.3f" % round(self.runs_percentage, ndigits=3), "%4g" % round(self.elo),
               self.won, self.lost, self.drew, sep='\t')
 
     def print_all(self):
         """Print the formatted attributes of the team."""
 
-        print(self.name.upper(), ' '*(20-len(self.name)), self.points, self.runs_percentage, self.elo, self.played,
+        print(self.name.upper(), ' ' * (20 - len(self.name)), self.points, self.runs_percentage, self.elo, self.played,
               self.won, self.lost, self.drew, self.runs_scored, self.runs_allowed)
 
 
@@ -270,6 +262,24 @@ def win_lose_or_draw(game):
         return act_v_home + 0.5
 
 
+def record_win_loss_draw(winner, loser, draw=False):
+    """"""
+
+    if draw is False:
+        winner.won += 1
+        loser.lost += 1
+    elif draw is True:
+        winner.draw += 1
+        loser.draw += 1
+
+
+def check_elo_upset(winner, loser, upsets):
+    """Add one to the upset variable if the loss what an upset."""
+
+    if winner.elo > loser.elo:
+        return upsets += 1
+
+
 def expected_value(game):
     """Calculate the expected value of a match for each team, based on their respective elos."""
 
@@ -302,6 +312,14 @@ def calculate_elo(game, k=40):
     # add a writing part in here to write the results_parsed/plus file with elos
 
 
+def add_home_field_advantage(team_home, home_field_advantage=0):
+    """Add the home field advantage to the home team's elo and return the modified rating."""
+
+    # is this the best way to apply a home_field_advantage
+    home_elo_plus = team_home.elo + home_field_advantage
+    return elo_home_plus
+
+
 def predict_next_round(grade, df):
     """Predict the next round."""
 
@@ -309,15 +327,13 @@ def predict_next_round(grade, df):
     fixture = pd.read_csv('%s_2018_fixture.csv' % grade, index_col=0)
     fixture.dropna(axis='columns', how='all', inplace=True)
     fixture.columns = ['date_time', 'team_home', 'team_away', 'ground']
-    next_round = fixture.loc[length-1:length+2, ['team_home', 'team_away', 'ground']]
+    next_round = fixture.loc[length - 1:length + 2, ['team_home', 'team_away', 'ground']]
     print(grade, 'predictions:')
     for game in range(len(next_round)):
         home_chance = expected_value(next_round.iloc[game])
         print(next_round.iloc[game, 0] + " vs. " + next_round.iloc[game, 1])
-        print(next_round.iloc[game, 0] + '\'s chance of winning: '
-              + str(round(home_chance * 100)) + '%')
-        print(next_round.iloc[game, 1] + '\'s chance of winning: '
-              + str(round((1 - home_chance) * 100)) + '%')
+        print(next_round.iloc[game, 0] + '\'s chance of winning: ' + str(round(home_chance * 100)) + '%')
+        print(next_round.iloc[game, 1] + '\'s chance of winning: ' + str(round((1 - home_chance) * 100)) + '%')
         print('------')
 
 
@@ -341,5 +357,24 @@ for season in seasons:
     if year == 2018:
         predict_next_round(grade, results_df)
 
-    League.print_ordered_standings(league)
+    League.print_standings(league)
     League.write_standings_csv(league)
+
+
+"""
+loop over for k in range(1, 50) to fine-tune which k value is IDEAL.
+
+This k loop needs to run over the entire dataset. - also for each league? Which leagues does the model work best for?
+
+upsets should be a list - k = 1, upsets[k-1]
+
+minimum value on the list?
+
+loop over home field advantage? 2 axes ^> with colour representing the number of upsets
+"""
+
+#
+# for k in range(1, 50):
+#     upsets = 0
+#     calculate_elo()
+#     upsets = check_upset(winner, loser, upsets)
