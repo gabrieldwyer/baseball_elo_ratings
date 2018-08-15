@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Predictions
-permalink: /baseball_elo_ratings/predictions/
+permalink: /predictions/
 ---
 
 These are my predictions for the coming round of MWBL baseball:
