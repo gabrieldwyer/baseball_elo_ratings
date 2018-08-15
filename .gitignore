@@ -3,10 +3,12 @@
 .offline
 geckodriver.log
 __pycache__
+d3
 
 # don't upload the data
 _data
 _data_working
+_data_vsl
 
 # jekyll created .gitignore file
 _site
