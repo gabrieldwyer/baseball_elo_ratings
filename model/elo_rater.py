@@ -15,6 +15,8 @@ import pandas as pd
 
 # initalising functions
 
+os.chdir('/Users/gabrieldwyer/Documents/04_Programming/baseball_elo_ratings/')
+
 
 def get_grade_year(path):
     """Generate the grade and year based on the file names in the data directory."""
@@ -25,7 +27,7 @@ def get_grade_year(path):
     file_list = []
     for file in os.listdir():
         file_name, file_ext = os.path.splitext(file)
-        if file_name == 'README.md':
+        if file_name == 'README':
             continue  # skip any README.md files
         grade, year, file_type = tuple(file_name.split('_'))
         file_list.append((grade, year, file_type))
@@ -45,7 +47,8 @@ def get_teams(csvfile, grade, year):
 
     teams = {}
     df = pd.read_csv(os.getcwd() + '/' + csvfile)
-    for team in df.team_home.unique():
+    all_teams_df = pd.concat([df.team_home, df.team_away])
+    for team in all_teams_df.unique():
         teams[team] = Team(team, grade, year)
     return teams
 
@@ -277,7 +280,8 @@ def check_elo_upset(winner, loser, upsets):
     """Add one to the upset variable if the loss what an upset."""
 
     if winner.elo > loser.elo:
-        return upsets += 1
+        upsets += 1
+        return upsets
 
 
 def expected_value(game):
@@ -339,7 +343,7 @@ def predict_next_round(grade, df):
 
 # This is the calling bit!
 
-seasons = get_grade_year('_data_working')
+seasons = get_grade_year('data/data_working')
 print(seasons)
 
 for season in seasons:
