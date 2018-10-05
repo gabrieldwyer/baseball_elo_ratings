@@ -34,7 +34,7 @@ On (github)[github], all of the directories with the underscore prefix are for j
     - Monte Carlo method
     - mathematical calculation method
 - learn to discount Bye games
-- learn to distinguish between finals and regular season
+- learn to distinguish between finals and regular season - either number of games per round, dates, or scraping the results more carefully.
 - graphs, and pretty visualisations - D3.js? SVG? Not sure...
 - interactivity within the graphs
 - broader design goals including more sophisticated implementations of my personal website and portfolio
@@ -50,8 +50,12 @@ On (github)[github], all of the directories with the underscore prefix are for j
 - For one season of data - lowest Elo Grade A = highest Elo Grade B?
 - How similar are teams from one game to the next?
 - apply this model and more to other situations i.e. The Big Bash
+- add field data (LOCATION, orientation, size)
+- add weather data for each game
+- determine standard for washouts - using weather data and previous washout games
 
-I also believe that the data I currently possess may be enough to determine a Park Factor for each of the parks used by the league.
+
+I also believe that the data I currently possess may be enough to determine a Park Factor for each of the parks used by the league. Ideally I would have information about the number of innings played. I will either have to ignore this, or assume it's five. It also very much could be different across different competitions which complicates things.
 
 This README could be improved by adding plain language explanations to a number of its elements, to ensure the lay-person can understand, in at least broad strokes, what is going on, and how accurate/inaccurate the model/data/prediction is. Assumptions should also be listed and described.
 
