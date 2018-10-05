@@ -1,380 +1,291 @@
-# elo_rater.py
+# attempt to implement elo rater with dataclasses and the standard library
 
-# IMPROVEMENTS to be made:
-# - determine the difference between the regular season and finals
-# - write the updated elo to the results DataFrame and save it so a csvfile
-# - write a csv file with elo over time for each team?
-# - find the bye rounds and ignore them
-# - scrape weather from the closest weather station to
-# - treat byes as NOT A TEAM
-
+import csv
+import datetime
 import os
+from dataclasses import dataclass, field
 
-import matplotlib.pyplot as plt
-import pandas as pd
+print('')
+print('++ start ++')
 
-# initalising functions
+GRADE = 'BReserves'
+YEAR = 2018
+DATA_PATH = os.getcwd() + '/data/test/'
 
 
-def get_grade_year(path):
-    """Generate the grade and year based on the file names in the data directory."""
+def get_grades_years():
 
-    root_path = os.getcwd()
-    os.chdir(root_path + "/" + path)
-    print(os.getcwd())
-    file_list = []
+    files_list = []
     for file in os.listdir():
         file_name, file_ext = os.path.splitext(file)
-        if file_name == 'README.md':
-            continue  # skip any README.md files
-        grade, year, file_type = tuple(file_name.split('_'))
+        if file_name == 'README':
+            continue  # skip any README files
+        grade, year, data_type = tuple(file_name.split('_'))
         file_list.append((grade, year, file_type))
 
-    return sorted(file_list)
+    files_tuple = tuple(sorted(file_list))
+
+    return files_tuple
 
 
-def get_games(csvfile):
-    """Return the results DataFrame for the results csv in the current working directory."""
+def get_games(csv_filename):
 
-    df = pd.read_csv(os.getcwd() + '/' + csvfile)
-    return df
+    results_list = []
+    index = 0
 
+    with open(DATA_PATH + csv_filename) as csvfile:
+        results_dictreader = csv.DictReader(csvfile)
 
-def get_teams(csvfile, grade, year):
-    """Return a dictionary of Team objects with team.name string keys."""
+        for result in results_dictreader:
+            results_list.append(dict(result))
 
-    teams = {}
-    df = pd.read_csv(os.getcwd() + '/' + csvfile)
-    for team in df.team_home.unique():
-        teams[team] = Team(team, grade, year)
-    return teams
+    results_tuple = tuple(results_list)
 
-
-def input_grade(grade_input=False):
-    """Ask the user what grade they would like to analyse. Needs updating."""
-
-    if grade_input is False:
-        grade_input = input('Which grade do you want? ')
-    grade_dict = {'B Grade': 'B', 'B Reserves': 'BRes'}
-    grade = grade_dict[grade_input]
-    return grade
-
-# define classes
+    return results_tuple
 
 
-class League:
+@dataclass
+class Season:
+    year: int
+    grade: str
+    teams: tuple = field(init=False)
 
-    def __init__(self, year, grade):
-        self.year = year
-        self.grade = grade
-        self.teams = get_teams(self.results, self.grade, self.year)
+    def __post_init__(self):
+        self.teams = self.initalise_teams()
+
+    WIN_POINTS = 2
+    DRAW_POINTS = 1
+
+    def initalise_teams(self):
+        teams = []
+
+        with open(DATA_PATH + self.results) as csvfile:
+            results_csv = csv.DictReader(csvfile)
+            for game in results_csv:
+                team_home = game.get('team_home')
+                if team_home.lower() != 'bye':
+                    teams.append(Team(team_home))
+                team_away = game.get('team_away')
+                if team_away.lower() != 'bye':
+                    teams.append(Team(team_away))
+        teams = set(teams)
+        return tuple(teams)
 
     @property
     def results(self):
-        # maybe this should actually be the DataFrame?
-        try:
-            return '%s_%s_results.csv' % (self.grade, self.year)
-        except FileNotFoundError:
-            return None
+        return f'{self.grade}_{self.year}_results.csv'
 
-    def print_league_info(self):
-        """Print the league information."""
+    @property
+    def standings(self):
 
+        standings = []
+        team_value = {}
+        for team in self.teams:
+            team_value[team] = [team.points + 0.1 * team.runs_percentage]
+
+        while len(team_value) > 0:
+            max_team = max(team_value.keys(), key=(lambda k: team_value[k]))
+            standings.append(max_team)
+            team_value.pop(max_team)
+
+        return tuple(standings)
+
+    @staticmethod
+    def filter_byes(name):
+        pass
+
+    def print_season_info(self):
         print(self.grade, self.year)
 
     def print_standings(self):
-        """Find the currrent standings and print them in order of points. Break ties with R%."""
 
         print('-')
-        League.print_league_info(self)
+        self.print_season_info()
         print('-')
         print('TEAM', '\t\t', 'POINTS', 'R%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
-        team_points = {}
-        for team in self.teams.values():
-            team_points[team] = [team.points + 0.1 * team.runs_percentage]
-        # Run percantage is the second sorting criteria of the standings
-        # 0 =< R% =< 1, and higher R% is better
-        # thus it can simply be added to the points integer to create a composite sorting value
-        # R% is multiplied by 0.1 to avoid attributing a perfect record (i.e. no runs allowed) from counting as a point
-
-        while len(team_points) > 0:
-            key_max = max(team_points.keys(), key=(lambda k: team_points[k]))
-            Team.print_most(key_max)
-            team_points.pop(key_max)
+        for team in self.standings:
+            Team.print_team(team)
         print('-')
 
-    def print_elo(self):
-        """Print elo ratings of each team."""
-
-        for team in self.teams:
-            Team.print_elo(self.teams[team])
-
-    def write_standings_csv(self):
-        """Convert the teams dictionary to a DataFrame and save it as a csv file."""
-
-        all_teams = []
-        for team in self.teams:
-            all_teams.append(self.teams[team].__dict__)
-        standings_df = pd.DataFrame(all_teams)
-        standings_df.set_index('name', inplace=True)
-        standings_df.to_csv('%s_%s_standings.csv' % (self.grade, self.year))
+    @staticmethod
+    def get_team_from_name_string(teams, team_name_string):
+        for team in teams:
+            if team.name == team_name_string:
+                return team
 
 
-class Club:
+@dataclass
+class Game:
+    team_home: str
+    team_away: str  # should these be the Team object themselves?
+    score_home: int
+    score_away: int
+    date_time: str = None
+    round_number: int = None
+    ground: str = None
+    is_final: bool = None
+    # type of game - future / results - prediction
 
-    def __init__(self, colours, alias):
-        self.colours = colours
-        self.alias = alias
+    @classmethod
+    def from_dict(cls, game_dict):
+        '''Take the dictionary returned from reading the csv and turn it into the game object'''
+        '''Ideally this will be able to handle some degree of dirtiness or incompletion in the data'''
+
+        team_home = Season.get_team_from_name_string(season.teams, game_dict['team_home'])
+        team_away = Season.get_team_from_name_string(season.teams, game_dict['team_away'])
+        score_home = int(game_dict['score_home'])
+        score_away = int(game_dict['score_away'])
+        date_time = game_dict['date_time']
+        # Game.try_key(game_dict, 'ground')
+        # ground = game_dict['ground']
+        # round_number = game_dict['round_number']
+        print(type(team_home))
+        return cls(team_home, team_away, score_home, score_away, date_time)
+
+    @staticmethod
+    def try_key(dict, key):
+        try:
+            return dict[key]
+        except KeyError:
+            print(f'THERE\'S NO \'{key}\' IN THE DICTIONARY')
+            return None
+
+    # def winner_loser():
+
+    def run_recorder(self):
+        # I need to set the team_home attribute to be the Team object in Season.teams referenced by the Team.name string found in the results csv.
+
+        self.team_home.runs_scored += self.score_home
+        self.team_home.runs_allowed += self.score_away
+        self.team_away.runs_scored += self.score_away
+        self.team_away.runs_allowed += self.score_home
+
+        # print(self.team_home.runs_scored)
+        # definitely adding it to the object...
 
 
-def get_elo(self):
-    """Get the initial elo rating, based on the team elo of the prior season."""
+# @dataclass
+# class CompletedGame(Game):
+#     score_home: int
+#     score_away: int
+#     pass
+#
+#
+# @dataclass
+# class FutureGame(Game):
+#     win_prob_home: float
+#     pass
+#
+#     @property
+#     def win_prob_home(self):
+#         return exp_val_home
+#
+#     @property
+#     def win_prob_away(self):
+#         return 1 - self.win_prob_home
 
-    print(self.name, 'returning: ', self.returning)
-    if not self.returning:
-        return 1500
-    else:
-        previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year - 1), index_col=0)
-        previous_elo = previous_standings.elo.loc[self.name]
-        return previous_elo / 2 + 750  # regress elo halfway to the mean
 
+@dataclass(unsafe_hash=True)
+class Team:
+    name: str
+    colours: tuple = 'NaN'
+    runs_scored: int = 0
+    runs_allowed: int = 0
+    wins: int = 0
+    losses: int = 0
+    draws: int = 0
+    elo: float = field(init=False)
 
-class Team(Club):
+    def __post_init__(self):
+        self.elo = self.initalise_elo()
 
-    def __init__(self, name, grade, year, colours='NaN', alias='NaN', homeground='NaN',
-                 played=0, won=0, lost=0, drew=0, points=0, runs_scored=0, runs_allowed=0):
-        self.name = name
-        self.grade = grade
-        self.year = year
-        Club.__init__(self, colours='NaN', alias='NaN')
-        self.homeground = homeground
-        self.played = played
-        self.won = won
-        self.lost = lost
-        self.drew = drew
-        self.runs_scored = runs_scored
-        self.runs_allowed = runs_allowed
-        self.elo = get_elo(self)
+    def get_previous_standings(self):
+        try:
+            with open(DATA_PATH + f'{GRADE}_{YEAR - 1}_standings.csv') as csvfile:
+                previous_standings = csv.DictReader(csvfile)
+                return previous_standings
+        except FileNotFoundError:
+            return None
 
-    def __repr__(self):
-        return self.name
+    def initalise_elo(self):
+        if not self.is_returning:
+            return 1500
+        else:
+            with open(DATA_PATH + f'{GRADE}_{YEAR - 1}_standings.csv') as csvfile:
+                previous_standings = csv.DictReader(csvfile)
+                for row in previous_standings:
+                    if row.get('name') == self.name:
+                        return self.regress_elo(row.get('elo'))
 
     @property
-    def runs_percentage(self):
-        """Calculate the run percentage."""
-
+    def is_returning(self):
+        is_returning = False
         try:
-            return 0.500 + 0.500 * ((self.runs_scored - self.runs_allowed) / (self.runs_scored + self.runs_allowed))
-        except ZeroDivisionError:
-            return 0.500
+            with open(DATA_PATH + f'{GRADE}_{YEAR - 1}_standings.csv') as csvfile:
+                previous_standings = csv.DictReader(csvfile)
+                for row in previous_standings:
+                    if row.get('name') == self.name:
+                        is_returning = True
+        except FileNotFoundError:
+            print('File Not Found')
+            print(os.getcwd())
+
+        return is_returning
 
     @property
-    def win_percentage(self):
-        """Calculate the win percentage."""
-
-        try:
-            return 0.500 + 0.500 * ((self.won - self.lost) / (self.won + self.lost))
-        except ZeroDivisionError:
-            return 0.500
+    def played(self):
+        return self.wins + self.losses + self.draws
 
     @property
     def points(self):
-        """Calculate the points attribute dynamically from won and drew."""
-
-        return self.won * 2 + self.drew
+        return self.wins * Season.WIN_POINTS + self.draws * Season.DRAW_POINTS
 
     @property
-    def returning(self):
-        """Check to see if the Team object played in the same grade in the previous year."""
+    def runs_percentage(self):
+        return self.calc_stat_percent(up=self.runs_scored, down=self.runs_allowed)
 
+    @property
+    def win_percentage(self):
+        return self.calc_stat_percent(up=self.wins, down=self.losses)
+
+    @staticmethod
+    def regress_elo(elo):
+        return float(elo) / 2 + 750  # regress elo halfway to the mean
+
+    @staticmethod
+    def calc_stat_percent(up, down):
         try:
-            previous_standings = pd.read_csv('%s_%s_standings.csv' % (grade, year - 1), index_col=0)
-        except FileNotFoundError:
-            return False
+            return 0.500 + 0.500 * ((up - down) / (up + down))
+        except ZeroDivisionError:
+            return 0.500
 
-        try:
-            return str(self.name) in previous_standings.index.values
-        except IndexError:
-            return False
-
-    def print_elo(self):
-        """Print the formatted elo rating of the team."""
-
-        print(self.name.upper(), ' ' * (20 - len(self.name)), self.elo)
-
-    def print_most(self):
-        """Print the formatted main attributes of the team."""
-
+    def print_team(self):
         print(self.name.upper(), ' ' * (23 - len(self.name)), self.points,
-              "%.3f" % round(self.runs_percentage, ndigits=3), "%4g" % round(self.elo),
-              self.won, self.lost, self.drew, sep='\t')
+              f'{round(self.runs_percentage, ndigits=3)}',
+              f'{round(self.elo)}', self.wins, self.losses, self.draws, sep='\t')
 
-    def print_all(self):
-        """Print the formatted attributes of the team."""
-
-        print(self.name.upper(), ' ' * (20 - len(self.name)), self.points, self.runs_percentage, self.elo, self.played,
-              self.won, self.lost, self.drew, self.runs_scored, self.runs_allowed)
+    def predict_next_game(self):
+        pass
 
 
-# calculation and writing functions
+season = Season(YEAR, GRADE)
+for team in season.teams:
+    print(team)
 
 
-def get_team_score(game):
-    """Set local variables for teams and scores for further calculation functions."""
-
-    team_home, team_away = (league.teams[game.get('team_home')], league.teams[game.get('team_away')])
-    score_home, score_away = (int(game.get('score_home')), int(game.get('score_away')))
-    return team_home, team_away, score_home, score_away
+def parse_game():
+    Game.run_recorder()
 
 
-def run_recorder(team_home, team_away, score_home, score_away):
-    """Add the runs scored to both Team objects."""
+for game_dict in get_games(season.results):
+    game = Game.from_dict(game_dict)
+    print(game.team_home.name, game.score_home, game.score_away, game.team_away.name)
+    Game.run_recorder(game)
 
-    team_home.runs_scored += score_home
-    team_home.runs_allowed += score_away
-    team_away.runs_scored += score_away
-    team_away.runs_allowed += score_home
+Season.print_standings(season)
 
-
-def win_lose_or_draw(game):
-    """Compare the score of each team to determine the outcome(W/L/D) for each team."""
-
-    team_home, team_away, score_home, score_away = get_team_score(game)
-    run_recorder(team_home, team_away, score_home, score_away)
-
-    team_home.played += 1
-    team_away.played += 1
-
-    act_v_home = 0  # placeholder
-    if score_home > score_away:
-        team_home.won += 1
-        team_away.lost += 1
-        return act_v_home + 1
-
-    elif score_home < score_away:
-        team_home.lost += 1
-        team_away.won += 1
-        return act_v_home
-
-    elif score_home == score_away:
-        team_home.drew += 1
-        team_away.drew += 1
-        return act_v_home + 0.5
+for team in season.teams:
+    print(team)
 
 
-def record_win_loss_draw(winner, loser, draw=False):
-    """"""
-
-    if draw is False:
-        winner.won += 1
-        loser.lost += 1
-    elif draw is True:
-        winner.draw += 1
-        loser.draw += 1
-
-
-def check_elo_upset(winner, loser, upsets):
-    """Add one to the upset variable if the loss what an upset."""
-
-    if winner.elo > loser.elo:
-        return upsets += 1
-
-
-def expected_value(game):
-    """Calculate the expected value of a match for each team, based on their respective elos."""
-
-    # retrieves the relevant elo scores
-    elo_home = league.teams[game.get('team_home')].elo
-    elo_away = league.teams[game.get('team_away')].elo
-
-    exp_v_home = 1 / (1 + 10**((elo_away - elo_home) / 400))
-    # helpfully, the expected score is actually the same as the win probability
-    return exp_v_home
-
-
-def calculate_elo(game, k=40):
-    """Calculate the updated elo rating of each team following a game."""
-
-    # calculation of expected score for each team
-    exp_v_home = expected_value(game)
-    act_v_home = win_lose_or_draw(game)
-
-    # home_val + away_val = 1, therefore we can do this:
-    exp_v_away = 1 - exp_v_home
-    act_v_away = 1 - act_v_home
-
-    # calculates and writes the new elo rank
-    elo_home_new = league.teams[game.get('team_home')].elo + k * (act_v_home - exp_v_home)
-    elo_away_new = league.teams[game.get('team_away')].elo + k * (act_v_away - exp_v_away)
-
-    league.teams[game.get('team_home')].elo = elo_home_new
-    league.teams[game.get('team_away')].elo = elo_away_new
-    # add a writing part in here to write the results_parsed/plus file with elos
-
-
-def add_home_field_advantage(team_home, home_field_advantage=0):
-    """Add the home field advantage to the home team's elo and return the modified rating."""
-
-    # is this the best way to apply a home_field_advantage
-    home_elo_plus = team_home.elo + home_field_advantage
-    return elo_home_plus
-
-
-def predict_next_round(grade, df):
-    """Predict the next round."""
-
-    length = len(df)
-    fixture = pd.read_csv('%s_2018_fixture.csv' % grade, index_col=0)
-    fixture.dropna(axis='columns', how='all', inplace=True)
-    fixture.columns = ['date_time', 'team_home', 'team_away', 'ground']
-    next_round = fixture.loc[length - 1:length + 2, ['team_home', 'team_away', 'ground']]
-    print(grade, 'predictions:')
-    for game in range(len(next_round)):
-        home_chance = expected_value(next_round.iloc[game])
-        print(next_round.iloc[game, 0] + " vs. " + next_round.iloc[game, 1])
-        print(next_round.iloc[game, 0] + '\'s chance of winning: ' + str(round(home_chance * 100)) + '%')
-        print(next_round.iloc[game, 1] + '\'s chance of winning: ' + str(round((1 - home_chance) * 100)) + '%')
-        print('------')
-
-
-# This is the calling bit!
-
-seasons = get_grade_year('_data_working')
-print(seasons)
-
-for season in seasons:
-    grade, year, file_type = season
-    year = int(year)
-    print('-')
-    print(season)
-    if file_type == 'standings' or file_type == 'fixture':
-        continue
-    league = League(year, grade)
-    League.print_elo(league)
-    results_df = pd.read_csv(league.results, index_col=0, header=0)
-    for row in range(len(results_df)):
-        calculate_elo(results_df.loc[row])
-    if year == 2018:
-        predict_next_round(grade, results_df)
-
-    League.print_standings(league)
-    League.write_standings_csv(league)
-
-
-"""
-loop over for k in range(1, 50) to fine-tune which k value is IDEAL.
-
-This k loop needs to run over the entire dataset. - also for each league? Which leagues does the model work best for?
-
-upsets should be a list - k = 1, upsets[k-1]
-
-minimum value on the list?
-
-loop over home field advantage? 2 axes ^> with colour representing the number of upsets
-"""
-
-#
-# for k in range(1, 50):
-#     upsets = 0
-#     calculate_elo()
-#     upsets = check_upset(winner, loser, upsets)
+print('++ done ++')
