@@ -10,20 +10,30 @@ print('++ start ++')
 
 GRADE = 'BReserves'
 YEAR = 2018
-DATA_PATH = os.getcwd() + '/data/test/'
+ROOT_PATH = os.getcwd()
+DATA_PATH = ROOT_PATH + '/data/test/'
 
 
 def get_grades_years():
+
+    os.chdir(DATA_PATH)
 
     files_list = []
     for file in os.listdir():
         file_name, file_ext = os.path.splitext(file)
         if file_name == 'README':
             continue  # skip any README files
-        grade, year, data_type = tuple(file_name.split('_'))
-        file_list.append((grade, year, file_type))
 
-    files_tuple = tuple(sorted(file_list))
+        grade, year, data_type = tuple(file_name.split('_'))
+
+        if data_type == 'standings' or data_type == 'fixture':
+            continue
+
+        files_list.append((grade, year, data_type))
+
+    files_tuple = tuple(sorted(files_list))
+
+    os.chdir(ROOT_PATH)
 
     return files_tuple
 
@@ -78,6 +88,10 @@ class Season:
     @property
     def standings(self):
 
+        # test sorting this with two sorted() statements
+        # likely more pythonic (both use lambda expressions anyway)
+        # sort by R% and then by points (sorted won't change the order if there's a tie)
+
         standings = []
         team_value = {}
         for team in self.teams:
@@ -89,6 +103,10 @@ class Season:
             team_value.pop(max_team)
 
         return tuple(standings)
+
+    @property
+    def longest_name(self):
+        return max(len(team.name) for team in self.teams)
 
     @staticmethod
     def filter_byes(name):
@@ -102,7 +120,7 @@ class Season:
         print('-')
         self.print_season_info()
         print('-')
-        print('TEAM', '\t\t', 'POINTS', 'R%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
+        print('TEAM', ' ' * (self.longest_name - 4), 'POINTS', 'R%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
         for team in self.standings:
             Team.print_team(team)
         print('-')
@@ -139,7 +157,6 @@ class Game:
         # Game.try_key(game_dict, 'ground')
         # ground = game_dict['ground']
         # round_number = game_dict['round_number']
-        print(type(team_home))
         return cls(team_home, team_away, score_home, score_away, date_time)
 
     @staticmethod
@@ -150,18 +167,56 @@ class Game:
             print(f'THERE\'S NO \'{key}\' IN THE DICTIONARY')
             return None
 
-    # def winner_loser():
+    @property
+    def is_draw(self):
 
-    def run_recorder(self):
-        # I need to set the team_home attribute to be the Team object in Season.teams referenced by the Team.name string found in the results csv.
+        if self.score_home == self.score_away:
+            return True
+        else:
+            return False
+
+    @property
+    def winner(self):
+
+        if self.score_home > self.score_away:
+            return self.team_home
+        elif self.score_away > self.score_home:
+            return self.team_away
+        else:
+            return None
+
+    @property
+    def loser(self):
+
+        if self.score_home > self.score_away:
+            return self.team_away
+        elif self.score_away > self.score_home:
+            return self.team_home
+        else:
+            return None
+
+    def get_actual_value_home(self):
+
+        if self.team_home == self.winner:
+            return 1
+        elif self.is_draw:
+            return 0.5
+        else:
+            return 0
+
+    def record(self):
 
         self.team_home.runs_scored += self.score_home
         self.team_home.runs_allowed += self.score_away
         self.team_away.runs_scored += self.score_away
         self.team_away.runs_allowed += self.score_home
 
-        # print(self.team_home.runs_scored)
-        # definitely adding it to the object...
+        if self.is_draw:
+            self.team_home.draws += 1
+            self.team_away.draws += 1
+        else:
+            self.winner.wins += 1
+            self.loser.losses += 1
 
 
 # @dataclass
@@ -260,32 +315,52 @@ class Team:
             return 0.500
 
     def print_team(self):
-        print(self.name.upper(), ' ' * (23 - len(self.name)), self.points,
+        print(self.name.upper(), ' ' * (season.longest_name - len(self.name)), self.points,
               f'{round(self.runs_percentage, ndigits=3)}',
               f'{round(self.elo)}', self.wins, self.losses, self.draws, sep='\t')
 
     def predict_next_game(self):
-        pass
+        expected_value()
 
 
-season = Season(YEAR, GRADE)
-for team in season.teams:
-    print(team)
+def calculate_expected_value_home(game):
+
+    elo_home = game.team_home.elo
+    elo_away = game.team_away.elo
+
+    exp_val_home = 1 / (1 + 10**((elo_away - elo_home) / 400))
+
+    # helpfully, the expected value is also the win probability for the given team.
+
+    return exp_val_home
 
 
-def parse_game():
-    Game.run_recorder()
+def calculate_elo(game, k=50):
+
+    exp_val_home = calculate_expected_value_home(game)
+    act_val_home = Game.get_actual_value_home(game)
+
+    exp_val_away = 1 - exp_val_home
+    act_val_away = 1 - act_val_home
+
+    elo_home_new = game.team_home.elo + k * (act_val_home - exp_val_home)
+    elo_away_new = game.team_away.elo + k * (act_val_away - exp_val_away)
+
+    game.team_home.elo = elo_home_new
+    game.team_away.elo = elo_away_new
 
 
-for game_dict in get_games(season.results):
-    game = Game.from_dict(game_dict)
-    print(game.team_home.name, game.score_home, game.score_away, game.team_away.name)
-    Game.run_recorder(game)
+seasons = get_grades_years()
 
-Season.print_standings(season)
+for season in seasons:
+    grade, year, data_type = season
+    season = Season(year, grade)
+    for game_dict in get_games(season.results):
+        game = Game.from_dict(game_dict)
+        Game.record(game)
+        calculate_elo(game)
 
-for team in season.teams:
-    print(team)
+    Season.print_standings(season)
 
 
 print('++ done ++')
