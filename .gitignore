@@ -1,6 +1,6 @@
 # ignore these folders
 .DS_Store
-.offline
+offline
 geckodriver.log
 __pycache__
 d3
