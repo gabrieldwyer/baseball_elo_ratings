@@ -4,11 +4,12 @@ title: About
 permalink: /about/
 ---
 
-# Melbourne Winter Baseball League (MWBL) Elo Ratings Project
+# Victorian Baseball Elo Ratings Project
 
 ## Overview
 
 This is a project to develop a reasonably sophisticated prediction model based on the Elo rating system.
+I've used data from the Victorian Summer Baseball League (VSBL) and the Melbourne Winter Baseball League (MWBL).
 
 It is intended as a learning exercise.
 
@@ -24,7 +25,7 @@ As the Elo system is being applied here to a game that has scores, it is importa
 
 ## Navigating the directories
 
-On (github)[github], all of the directories with the underscore prefix are for jekyll. All other directories are directly related to the project itself. I imagine in time, this distinction will grow increasingly vague as better web visualisations are achieved.
+On [github](github), all of the directories with the underscore prefix are for jekyll. All other directories are directly related to the project itself. I imagine in time, this distinction will grow increasingly vague as better web visualisations are achieved.
 
 ## Future improvements
 
@@ -33,13 +34,15 @@ On (github)[github], all of the directories with the underscore prefix are for j
 - include further predictions for the league other than the next round:
     - Monte Carlo method
     - mathematical calculation method
-- learn to discount Bye games
 - learn to distinguish between finals and regular season - either number of games per round, dates, or scraping the results more carefully.
 - graphs, and pretty visualisations - D3.js? SVG? Not sure...
 - interactivity within the graphs
 - broader design goals including more sophisticated implementations of my personal website and portfolio
-- determine the adequate home field advantage
-- include a margin of victory metric to improve the fidelity of the model and take full advantage of the data available to me
+- optimise the prediction model:
+    - determine the ideal home field advantage
+    - determine the ideal k factor i.e. how quickly the model responds to new data
+    - determine the ideal season regression factor i.e. how much are teams alike one season to the next
+- include a margin of victory metric to improve the fidelity of the model and take full advantage of the limited data available to me
 - create, test, and upload multiple possible models to compare which is best and why:
     - Home always wins
     - Offensive and Defensive Elo ratings?
@@ -61,12 +64,12 @@ This README could be improved by adding plain language explanations to a number 
 
 ## Assumptions
 
-Computers operate in binary, whereas humans typically work in decimal. At first glance, this distinction should be largely superficial -  however, it works out that (decimal numbers a represented as binary fractions on computers)[https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues]. In the same way that 0.3 (3/10) is not precisely 1/3, and neither is 0.33 (3/10 + 3/100), many of these binary fractions approximate the actual value to 53 bits. Ultimately, this problem has a minor to zero effect on the model, but I found it interesting nonetheless. There is the `fraction` module that allows for exact arithmetic fractions, but it's probably overkill to use it here.
+Computers operate in binary, whereas humans typically work in decimal. At first glance, this distinction should be largely superficial -  however, it works out that [decimal numbers a represented as binary fractions on computers](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues]. In the same way that 0.3 (3/10) is not precisely 1/3, and neither is 0.33 (3/10 + 3/100), many of these binary fractions approximate the actual value to 53 bits. Ultimately, this problem has a minor to zero effect on the model, but I found it interesting nonetheless. There is the `fraction` module that allows for exact arithmetic fractions, but it's probably overkill to use it here.
 
 ## Learn more
 
 Read more about Elo rating systems and predictive models in general:
-- (Elo rating system - Wikipedia)[https://en.wikipedia.org/wiki/Elo_rating_system]
-- fivethirtyeight's (MLB)[https://fivethirtyeight.com/features/how-our-mlb-predictions-work/], (NBA)[https://projects.fivethirtyeight.com/complete-history-of-the-nba/], and (NFL)[https://projects.fivethirtyeight.com/complete-history-of-the-nfl/] Elo ratings
-- (The Arc AFL Footy Elo ratings)[https://thearcfooty.com/2016/12/29/introducing-the-arcs-ratings-system/]
-- (Predicting Outcomes in Australian Rules Football PhD)[https://researchbank.rmit.edu.au/eserv/rmit:160744/Ryall.pdf]
+- [Elo rating system - Wikipedia](https://en.wikipedia.org/wiki/Elo_rating_system)
+- fivethirtyeight's [MLB](https://fivethirtyeight.com/features/how-our-mlb-predictions-work/), [NBA](https://projects.fivethirtyeight.com/complete-history-of-the-nba/), and [NFL](https://projects.fivethirtyeight.com/complete-history-of-the-nfl/) Elo ratings
+- [The Arc AFL Footy Elo ratings](https://thearcfooty.com/2016/12/29/introducing-the-arcs-ratings-system/)
+- [Predicting Outcomes in Australian Rules Football PhD](https://researchbank.rmit.edu.au/eserv/rmit:160744/Ryall.pdf)
