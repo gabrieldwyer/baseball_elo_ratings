@@ -43,6 +43,12 @@ def get_grades_years():
     return files_tuple
 
 
+<< << << < HEAD
+
+== == == =
+>>>>>> > 89447590e4f6f437a821f11a73296e41c7aecec9
+
+
 @dataclass
 class Season:
     year: int
@@ -382,6 +388,12 @@ def calc_elo(game, k=50):
 
     game.team_home.elo = elo_home_new
     game.team_away.elo = elo_away_new
+
+
+<< << << < HEAD
+
+== == == =
+>>>>>> > 89447590e4f6f437a821f11a73296e41c7aecec9
 
 
 def track_elo():
