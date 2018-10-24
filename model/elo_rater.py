@@ -29,6 +29,9 @@ def get_grades_years():
         if file_name == 'README':
             continue  # skip any README files
 
+        grade, year, file_type = tuple(file_name.split('_'))
+        file_list.append((grade, year, file_type))
+
         grade, year, data_type = tuple(file_name.split('_'))
 
         if data_type == 'standings' or data_type == 'fixtures':
@@ -41,7 +44,6 @@ def get_grades_years():
     os.chdir(ROOT_PATH)
 
     return files_tuple
-
 
 @dataclass
 class Season:
@@ -383,7 +385,6 @@ def calc_elo(game, k=50):
 
     game.team_home.elo = elo_home_new
     game.team_away.elo = elo_away_new
-
 
 def track_elo():
     # dictionary of team name keys with elo values. Ideally could work across seasons?
