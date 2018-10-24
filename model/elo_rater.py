@@ -186,7 +186,6 @@ class Game:
     ground: str = None
     is_final: bool = None
     official_status: str = None
-    # type of game - future / results - prediction
 
     @classmethod
     def from_dict(cls, teams, game_dict):
