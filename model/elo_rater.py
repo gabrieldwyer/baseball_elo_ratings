@@ -6,13 +6,17 @@ import os
 import time
 from dataclasses import dataclass, field
 
+import matplotlib.pyplot as plt
+
 print()
 print('++ start ++')
 
-GRADE = 'BReserves'
-YEAR = 2018
+CURRENT_YEAR = '2019'
 ROOT_PATH = os.getcwd()
-DATA_PATH = ROOT_PATH + '/data/data_vsl/'
+MWBL_PATH = '/data/data_mwbl/'
+VSL_PATH = '/data/data_vsl/'
+
+DATA_PATH = ROOT_PATH + VSL_PATH
 
 
 def get_grades_years():
@@ -27,7 +31,7 @@ def get_grades_years():
 
         grade, year, data_type = tuple(file_name.split('_'))
 
-        if data_type == 'standings' or data_type == 'fixture':
+        if data_type == 'standings' or data_type == 'fixtures':
             continue
 
         files_list.append((grade, year, data_type))
@@ -39,29 +43,23 @@ def get_grades_years():
     return files_tuple
 
 
-def get_games(csv_filename):
-
-    results_list = []
-
-    with open(DATA_PATH + csv_filename) as csvfile:
-        results_dictreader = csv.DictReader(csvfile)
-
-        for result in results_dictreader:
-            results_list.append(dict(result))
-
-    results_tuple = tuple(results_list)
-
-    return results_tuple
-
-
 @dataclass
 class Season:
     year: int
     grade: str
     teams: tuple = field(init=False)
+    results: tuple = field(init=False)
+    fixtures: tuple = field(init=False)
+    longest_name: int = field(init=False)
 
     def __post_init__(self):
         self.teams = self.initalise_teams()
+        self.results = self.initalise_games(self.teams, 'results')
+        if self.year == CURRENT_YEAR:
+            self.fixtures = self.initalise_games(self.teams, 'fixtures')
+        else:
+            self.fixtures = None
+        self.longest_name = self.initalise_longest_team_name()
 
     WIN_POINTS = 2
     DRAW_POINTS = 1
@@ -69,22 +67,50 @@ class Season:
     def initalise_teams(self):
 
         teams = []
+        bye = ['bye', 'baseball victoria']
 
-        with open(f'{DATA_PATH}{self.results}') as csvfile:
+        with open(f'{DATA_PATH}{self.grade}_{self.year}_results.csv') as csvfile:
             results_csv = csv.DictReader(csvfile)
+
             for game in results_csv:
                 team_home = game.get('team_home')
-                if type(team_home) == str and team_home.lower() != 'bye':
+                if team_home.lower() != 'bye' and team_home.lower() != 'baseball victoria':
                     teams.append(Team(team_home, self.grade, int(self.year)))
                 team_away = game.get('team_away')
-                if type(team_away) == str and team_away.lower() != 'bye':
+                if team_away.lower() != 'bye' and team_away.lower() != 'baseball victoria':
                     teams.append(Team(team_away, self.grade, int(self.year)))
         teams = set(teams)
         return tuple(teams)
 
-    @property
-    def results(self):
-        return f'{self.grade}_{self.year}_results.csv'
+    def initalise_games(self, teams, data_type):
+
+        games = []
+
+        bye = ['bye', 'baseball victoria']
+
+        try:
+            with open(f'{DATA_PATH}{self.grade}_{self.year}_{data_type}.csv') as csvfile:
+                games_dictreader = csv.DictReader(csvfile)
+
+                for game in games_dictreader:
+                    game_dict = dict(game)
+                    if game_dict.get('team_home').lower() in bye or game_dict.get('team_away').lower() in bye:
+                        continue
+                    game_obj = Game.from_dict(teams, game_dict)
+                    if game_obj is not None:
+                        games.append(game_obj)
+                    else:
+                        continue
+            return tuple(games)
+        except FileNotFoundError:
+            if self.year == CURRENT_YEAR:
+                print(f'Unable to find {data_type} file: {DATA_PATH}{self.grade}_{self.year}_{data_type}.csv')
+                pass
+            else:
+                pass
+
+    def initalise_longest_team_name(self):
+        return max(len(team.name) for team in self.teams)
 
     @property
     def standings(self):
@@ -98,14 +124,6 @@ class Season:
 
         return tuple(standings)
 
-    @property
-    def longest_name(self):
-        return max(len(team.name) for team in self.teams)
-
-    @staticmethod
-    def filter_byes(name):
-        pass
-
     def print_season_info(self):
         print(self.grade, self.year)
 
@@ -116,7 +134,7 @@ class Season:
         print('-')
         print('TEAM', ' ' * (self.longest_name - 5), 'W%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
         for team in self.standings:
-            Team.print_team(team)
+            Team.print_team(team, self.longest_name)
         print('-')
 
     def write_standings_csv(self):
@@ -125,25 +143,30 @@ class Season:
             all_teams.append(team.__dict__)
             fieldnames = team.__dict__.keys()
 
-        with open(f'{DATA_PATH}{grade}_{year}_standings.csv', 'w') as csvfile:
+        with open(f'{DATA_PATH}{self.grade}_{self.year}_standings.csv', 'w') as csvfile:
             standings_writer = csv.DictWriter(csvfile, fieldnames)
             standings_writer.writeheader()
             for team in all_teams:
                 standings_writer.writerow(team)
 
     def predict_next_round(self):
-        expected_value()
 
-        # pass some teams in
+        next_round_number = self.results[-1].round_number + 1
 
-        # perhaps use the fixture?
-        # round_number of the current results. The some of the results files already have bye results inputted
+        print(f'{self.grade} {self.year} Round {next_round_number} Predictions:')
 
-        # find the next game the team is playing in
-        # find the opposing team
-        # get the elos of the teams and derive the expected values from there
-        # remove the team from the list of teams.
-        # return the expected value * 100 predicting the outcome
+        if self.fixtures is not None:
+            for game in self.fixtures:
+
+                if game.round_number == next_round_number:
+                    exp_val_home = calc_exp_value_home(game)
+                    print(f'{game.team_away.name} @ {game.team_home.name}:')
+                    print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
+                    print(f'{game.team_away.name.upper()} chance of winning: {round((1-exp_val_home)*100)}%')
+                    print()
+        else:
+            print(f'Unable to predict games - fixture not found')
+            pass
 
     @staticmethod
     def get_team_from_name_string(teams, team_name_string):
@@ -156,35 +179,39 @@ class Season:
 class Game:
     team_home: str
     team_away: str  # should these be the Team object themselves?
-    score_home: int
-    score_away: int
+    score_home: int = None
+    score_away: int = None
     date_time: str = None
     round_number: int = None
     ground: str = None
     is_final: bool = None
+    official_status: str = None
     # type of game - future / results - prediction
 
     @classmethod
-    def from_dict(cls, game_dict):
+    def from_dict(cls, teams, game_dict):
         '''Take the dictionary returned from reading the csv and turn it into the game object'''
         '''Ideally this will be able to handle some degree of dirtiness or incompletion in the data'''
 
-        team_home = Season.get_team_from_name_string(season.teams, game_dict['team_home'])
-        team_away = Season.get_team_from_name_string(season.teams, game_dict['team_away'])
+        team_home = Season.get_team_from_name_string(teams, game_dict['team_home'])
+        team_away = Season.get_team_from_name_string(teams, game_dict['team_away'])
+
+        date_time = game_dict['date_time']
+        round_number = int(game_dict['round_number'])
+
+        # Game.try_key(game_dict, 'ground')
+        # ground = game_dict['ground']
+
         try:
             score_home = int(game_dict['score_home'])
             score_away = int(game_dict['score_away'])
+            if team_home is not None and team_away is not None:
+                return cls(team_home, team_away, score_home, score_away, date_time, round_number)
+        except KeyError:
+            if team_home is not None and team_away is not None:
+                return cls(team_home, team_away, date_time=date_time, round_number=round_number)
         except ValueError:
-            print('Game results not found - please check output file')
-            score_home = 0
-            score_away = 0
-        date_time = game_dict['date_time']
-        # Game.try_key(game_dict, 'ground')
-        # ground = game_dict['ground']
-        # round_number = game_dict['round_number']
-        if team_away is None or team_home is None:
-            return None
-        return cls(team_home, team_away, score_home, score_away, date_time)
+            pass
 
     @staticmethod
     def try_key(dict, key):
@@ -258,11 +285,9 @@ class Team:
     losses: int = 0
     draws: int = 0
     elo: float = field(init=False)
-    predicted_elo: float = field(init=False)
 
     def __post_init__(self):
         self.elo = self.initalise_elo()
-        self.predicted_elo = self.initalise_elo()
 
     def get_previous_standings(self):
         try:
@@ -315,7 +340,8 @@ class Team:
 
     @staticmethod
     def regress_elo(elo):
-        return float(elo) / 2 + 750  # regress elo halfway to the mean
+        regressed_elo = (float(elo) / regression_factor) + (1500 / regression_factor)
+        return regressed_elo
 
     @staticmethod
     def calc_stat_percent(up, down):
@@ -324,28 +350,29 @@ class Team:
         except ZeroDivisionError:
             return 0.500
 
-    def print_team(self):
+    def print_team(self, longest_name=0):
 
-        print(self.name, ' ' * (season.longest_name - len(self.name)),
+        print(self.name, ' ' * (longest_name - len(self.name)),
               f'\t{round(self.win_percentage, ndigits=3)}\t{round(self.elo)}\t',
               f'{self.wins}\t{self.losses}\t{self.draws}')
 
 
-def calculate_expected_value_home(game):
+def calc_exp_value_home(game):
 
     elo_home = game.team_home.elo
+    elo_home += hfa
     elo_away = game.team_away.elo
 
     exp_val_home = 1 / (1 + 10**((elo_away - elo_home) / 400))
 
-    # helpfully, the expected value is also the win probability for the given team.
+    # helpfully, the exp value is also the win probability for the given team.
 
     return exp_val_home
 
 
-def calculate_elo(game, k=50):
+def calc_elo(game, k=50):
 
-    exp_val_home = calculate_expected_value_home(game)
+    exp_val_home = calc_exp_value_home(game)
     act_val_home = Game.get_actual_value_home(game)
 
     exp_val_away = 1 - exp_val_home
@@ -363,39 +390,85 @@ def track_elo():
     pass
 
 
+def count_diff_values(diff_value):
+    diff_value_total += diff_value
+    return
+
+
+def calc_game_mse(game):
+
+    exp_val_home = calc_exp_value_home(game)
+    act_val_home = Game.get_actual_value_home(game)
+    game_mse = 2 * ((exp_val_home - act_val_home)**2)
+
+    return game_mse
+
+
+def calc_mean_squared_error(seasons):
+
+    diff_value_total = 0
+    n_games = 0
+
+    for season in seasons:
+        grade, year, data_type = season
+        season = Season(year, grade)
+        n_games += len(season.results)
+        for game in season.results:
+            exp_val_home = calc_exp_value_home(game)
+            act_val_home = Game.get_actual_value_home(game)
+            diff_value_total += 2 * ((exp_val_home - act_val_home)**2)  # same magnitude for home and away
+
+    return diff_value_total / n_games
+
+
+def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=False):
+
+    for season in seasons:
+        grade, year, data_type = season
+        if filter:
+            if filter not in grade:
+                continue
+        season = Season(year, grade)
+        for game in season.results:
+            Game.record(game)
+            calc_elo(game, k)
+
+        Season.write_standings_csv(season)
+
+        if print_standings:
+            print()
+            Season.print_standings(season)
+
+        if predict and year == CURRENT_YEAR:
+            Season.predict_next_round(season)
+
+
+def optimise_model():
+    """
+    Use the mean squared error to judge how accurate the model has been historically.
+
+    What parameters can be optimised:
+        - k factor i.e. how important was the last game played?
+        - home field advantage i.e. how much better should you expect to do at home?
+        - regression equation i.e. how is one season related to the next?
+        - margin of victory i.e. how much does margin of victory correlate with wins?
+        - anything else?
+
+    Ideally this is a wide scan of possible extremes, followed by increasingly narrow margins to find the minimum error
+    Translate the mean squared error into a bell curve?
+    Perhaps another method of calculation of how accurate the model is?
+
+    Also, in theory, the model itself could be optimised by refactoring - in terms of simplicity and time taken
+    """
+    pass
+
+
 seasons = get_grades_years()
-print(seasons)
 
-for season in seasons:
-    grade, year, data_type = season
-    # if year == '2019' or grade != 'Division4East':
-    #     continue
-    season = Season(year, grade)
-    print()
-    # to filter the grades
-    for game_dict in get_games(season.results):
-        game = Game.from_dict(game_dict)
-        if game is None:
-            continue  # don't process games that don't have a valid team
-            # this seems to be mostly Bye games - this filter should be improved in the official status log.
-        Game.record(game)
-        calculate_elo(game)
-        track_elo()
-
-    for team in season.teams:
-        if not team.is_returning:
-            print(team.name.upper())
-
-    Season.write_standings_csv(season)
-
-    Season.print_standings(season)
-
-# need to write a x_x_standings.csv writer
-# need to scrape the fixture for the home and away season
-# maybe club objects would be useful after all...
-# need to filter out seasons without sensible data (i.e. blank data)
-# ideally output something that can feed directly into my website page - probably a graph is the simplest.
-# additional web features are further away...
+hfa = 0
+k = 200
+regression_factor = 2  # how much of the previous score to get?
+iterate_over_seasons(seasons, 'Division', True, True)
 
 
 print('++ done ++')
