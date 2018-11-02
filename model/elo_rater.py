@@ -3,13 +3,14 @@
 import csv
 import datetime
 import os
+import random
 import time
 from dataclasses import dataclass, field
 
 import matplotlib.pyplot as plt
 
-print()
-print('++ start ++')
+# print()
+# print('++ start ++')
 
 CURRENT_YEAR = '2019'
 ROOT_PATH = os.getcwd()
@@ -41,12 +42,6 @@ def get_grades_years():
     os.chdir(ROOT_PATH)
 
     return files_tuple
-
-
-<< << << < HEAD
-
-== == == =
->>>>>> > 89447590e4f6f437a821f11a73296e41c7aecec9
 
 
 @dataclass
@@ -159,20 +154,34 @@ class Season:
 
         next_round_number = self.results[-1].round_number + 1
 
-        print(f'{self.grade} {self.year} Round {next_round_number} Predictions:')
+        print_table = True
+
+        if print_table:
+            print(f'**{self.grade}**')
+            print()
+            print('| Home Team | Home Odds | Away Odds | Away Team |')
+            print('| - | - | - | - |')
+        else:
+            print(f'{self.grade} {self.year} Round {next_round_number} Predictions:')
 
         if self.fixtures is not None:
             for game in self.fixtures:
 
                 if game.round_number == next_round_number:
                     exp_val_home = calc_exp_value_home(game)
-                    print(f'{game.team_away.name} @ {game.team_home.name}:')
-                    print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
-                    print(f'{game.team_away.name.upper()} chance of winning: {round((1-exp_val_home)*100)}%')
-                    print()
+                    home_win_pc = round(exp_val_home * 100)
+                    if print_table:
+                        print(f'| {game.team_home.name} | {home_win_pc}% | {100-home_win_pc}% | {game.team_away.name} |')
+                    else:
+                        print(f'{game.team_away.name} @ {game.team_home.name}:')
+                        print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
+                        print(f'{game.team_away.name.upper()} chance of winning: {round((1-exp_val_home)*100)}%')
+
         else:
             print(f'Unable to predict games - fixture not found')
             pass
+
+        print()
 
     @staticmethod
     def get_team_from_name_string(teams, team_name_string):
@@ -345,7 +354,7 @@ class Team:
 
     @staticmethod
     def regress_elo(elo):
-        regressed_elo = (float(elo) / regression_factor) + (1500 / regression_factor)
+        regressed_elo = (float(elo) / regression_factor) + 1500 * ((regression_factor - 1) / regression_factor)
         return regressed_elo
 
     @staticmethod
@@ -426,7 +435,10 @@ def calc_mean_squared_error(seasons):
     return diff_value_total / n_games
 
 
-def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=False):
+def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=False, count_error=False):
+
+    seasons_tse = 0
+    n_games = 0
 
     for season in seasons:
         grade, year, data_type = season
@@ -437,6 +449,9 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
         for game in season.results:
             Game.record(game)
             calc_elo(game, k)
+            if count_error:
+                seasons_tse += calc_game_mse(game)
+                n_games += len(season.results)
 
         Season.write_standings_csv(season)
 
@@ -447,8 +462,13 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
         if predict and year == CURRENT_YEAR:
             Season.predict_next_round(season)
 
+    if count_error and n_games:
+        seasons_mse = seasons_tse / n_games
+        seasons_mse_formatted = '{:0.4e}'.format(seasons_mse)
+        print(f'MSE: {seasons_mse_formatted} at k = {k}, hfa = {hfa}, rf = {regression_factor}')
 
-def optimise_model():
+
+def test_optimise_model():
     """
     Use the mean squared error to judge how accurate the model has been historically.
 
@@ -464,8 +484,61 @@ def optimise_model():
     Perhaps another method of calculation of how accurate the model is?
 
     Also, in theory, the model itself could be optimised by refactoring - in terms of simplicity and time taken
+
+    FIDELITY value?
     """
-    pass
+    mag = 10 ** 4
+    factor_max = int(mag * random.random())
+    second_factor_max = int(mag * random.random())
+    jump = int(factor_max / 4)
+    second_jump = int(second_factor_max / 4)
+    y_list = []
+    y_dict = {}
+    param_list = []
+
+    for factor_param in range(100, 100 + factor_max, jump):
+        for second_factor_param in range(0, second_factor_max, second_jump):
+            factor_param = factor_param / 10
+            second_factor_param = second_factor_param / 10
+            factor_y = test_function(factor_param, second_factor_param)
+
+            param_list.append(factor_param)
+            param_list.append(second_factor_param)
+
+            y_list.append(factor_y)
+            y_dict[factor_y] = param_list
+
+            param_list = []
+
+            print(f'{factor_param}: \t {factor_y}')
+
+    min_y = min(y_list)
+    print()
+    print(min_y)
+    print(y_dict[min_y])
+
+
+def test_function(x, a=543):
+
+    y = (x - a) ** 2
+
+    return y
+
+
+def guess_who_wins(future_game):
+
+    exp_val_home = calc_exp_value_home(future_game)
+    random_threshold = random.random()
+    print(random_threshold)
+    print(f'{future_game.team_home.name.upper()} CHANCE: {exp_val_home} vs. {future_game.team_away.name.upper()}')
+    if random_threshold <= exp_val_home:
+        print('The home team has won!')
+
+
+def guess_rest_of_season(season):
+    """
+    I want to call the same elo equation with the same parameters EXCEPT using the team.predicted_elo
+    """
 
 
 seasons = get_grades_years()
@@ -473,7 +546,15 @@ seasons = get_grades_years()
 hfa = 0
 k = 200
 regression_factor = 2  # how much of the previous score to get?
-iterate_over_seasons(seasons, 'Division', True, True)
 
+iterate_over_seasons(seasons, 'Division', predict=True)
 
-print('++ done ++')
+# optimise_model()
+
+# for k in range(1, 1001, 100):
+#     print()
+#     for regression_factor in range(1, 102, 5):
+#
+#         iterate_over_seasons(seasons, 'A', False, False, True)
+
+# print('++ done ++')
