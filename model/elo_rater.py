@@ -1,16 +1,14 @@
 # attempt to implement elo rater with dataclasses and the standard library
-
 import csv
 import datetime
 import os
 import random
+import re
 import time
+
 from dataclasses import dataclass, field
 
 import matplotlib.pyplot as plt
-
-# print()
-# print('++ start ++')
 
 CURRENT_YEAR = '2019'
 ROOT_PATH = os.getcwd()
@@ -42,6 +40,11 @@ def get_grades_years():
     os.chdir(ROOT_PATH)
 
     return files_tuple
+
+
+def initalise_next_round_prediction_yaml():
+    with open('_data/next_round_predictions.yaml', 'w') as yamlfile:
+        yamlfile.write('grades:\n')
 
 
 @dataclass
@@ -125,6 +128,20 @@ class Season:
 
         return tuple(standings)
 
+    @property
+    def display_grade(self):
+        # works for Seniors but patchy for other clubs
+        # for now, used primarily for displaying the prediction output.
+
+        display_grade = self.grade
+
+        display_grade = re.sub(r'([A-Z][a-z]+)', r'\1 ', display_grade)
+        display_grade = re.sub(r'([0-9]+)', r'\1 ', display_grade)
+        display_grade = re.sub(r' \)', r')', display_grade)
+        display_grade = display_grade.strip()
+
+        return display_grade
+
     def print_season_info(self):
         print(self.grade, self.year)
 
@@ -157,12 +174,12 @@ class Season:
         print_table = True
 
         if print_table:
-            print(f'**{self.grade}**')
+            print(f'**{self.display_grade}**')
             print()
             print('| Home Team | Home Odds | Away Odds | Away Team |')
             print('| - | - | - | - |')
         else:
-            print(f'{self.grade} {self.year} Round {next_round_number} Predictions:')
+            print(f'{self.display_grade} {self.year} Round {next_round_number} Predictions:')
 
         if self.fixtures is not None:
             for game in self.fixtures:
@@ -171,7 +188,7 @@ class Season:
                     exp_val_home = calc_exp_value_home(game)
                     home_win_pc = round(exp_val_home * 100)
                     if print_table:
-                        print(f'| {game.team_home.name} | {home_win_pc}% | {100-home_win_pc}% | {game.team_away.name} |')
+                        print(f'|{game.team_home.name}|{home_win_pc}%|{100-home_win_pc}%|{game.team_away.name}|')
                     else:
                         print(f'{game.team_away.name} @ {game.team_home.name}:')
                         print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
@@ -182,6 +199,32 @@ class Season:
             pass
 
         print()
+
+    def append_next_round_prediction_yaml(self):
+
+        next_round_number = self.results[-1].round_number + 1
+        indent_spaces = '    '
+
+        if self.fixtures is not None:
+            with open('_data/next_round_predictions.yaml', 'a') as yamlfile:
+                yamlfile.write(f'  -\n')
+                yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number}\'\n')
+                yamlfile.write(f'{indent_spaces}games:\n')
+
+                for game in self.fixtures:
+                    if game.round_number == next_round_number:
+                        yamlfile.write(f'{indent_spaces}-\n')
+                        indent_spaces += '  '
+                        exp_val_home = calc_exp_value_home(game)
+                        home_win_pc = round(exp_val_home * 100)
+                        yamlfile.write(f'{indent_spaces}team_home: \'{game.team_home.name}\'\n')
+                        yamlfile.write(f'{indent_spaces}team_away: \'{game.team_away.name}\'\n')
+                        yamlfile.write(f'{indent_spaces}chance_home: {home_win_pc}\n')
+                        yamlfile.write(f'{indent_spaces}chance_away: {100-home_win_pc}\n')
+                    indent_spaces = '    '
+        else:
+            print(f'Unable to predict games - fixture not found')
+            pass
 
     @staticmethod
     def get_team_from_name_string(teams, team_name_string):
@@ -440,12 +483,16 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
     seasons_tse = 0
     n_games = 0
 
+    if predict:
+        initalise_next_round_prediction_yaml()
+
     for season in seasons:
         grade, year, data_type = season
         if filter:
             if filter not in grade:
                 continue
         season = Season(year, grade)
+        season.display_grade
         for game in season.results:
             Game.record(game)
             calc_elo(game, k)
@@ -461,6 +508,7 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
 
         if predict and year == CURRENT_YEAR:
             Season.predict_next_round(season)
+            Season.append_next_round_prediction_yaml(season)
 
     if count_error and n_games:
         seasons_mse = seasons_tse / n_games
@@ -547,7 +595,7 @@ hfa = 0
 k = 200
 regression_factor = 2  # how much of the previous score to get?
 
-iterate_over_seasons(seasons, 'Division', predict=True)
+iterate_over_seasons(seasons, filter='Division', predict=True)
 
 # optimise_model()
 
@@ -556,5 +604,3 @@ iterate_over_seasons(seasons, 'Division', predict=True)
 #     for regression_factor in range(1, 102, 5):
 #
 #         iterate_over_seasons(seasons, 'A', False, False, True)
-
-# print('++ done ++')
