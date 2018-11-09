@@ -10,8 +10,7 @@ Also note that the model is nowhere near optimised - it is more than likely that
 
 These are my predictions for the coming round of VSBL baseball:
 
-Updated: 8 November
-
+-----
 {% for grade in site.data.next_round_predictions.grades %}
 <details>
     <summary>{{ grade.name }}</summary>
@@ -33,3 +32,5 @@ Updated: 8 November
 </table>
 </details>
 {% endfor %}
+-----
+Updated: {{ site.data.next_round_predictions.updated }}
