@@ -1,3 +1,5 @@
+---
+---
 @charset "utf-8";
 
 // Define defaults for each variable.
@@ -45,7 +47,7 @@ $on-laptop:        800px !default;
 
 // Import partials.
 @import
-  "styles/base",
-  "styles/layout",
-  "styles/syntax-highlighting"
+  "base",
+  "layout",
+  "syntax-highlighting"
 ;

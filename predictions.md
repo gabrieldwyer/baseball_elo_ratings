@@ -15,19 +15,18 @@ Updated: 8 November
 {% for grade in site.data.next_round_predictions.grades %}
 <details>
     <summary>{{ grade.name }}</summary>
-<table>
-  <th>
-    <td>Home Team</td>
-    <td>Home Chance</td>
-    <td>Away Chance</td>
-    <td>Away Team</td>
-  </th>
+<table class="table">
+  <tr>
+    <th>Home Team</th>
+    <th>Home Chance</th>
+    <th>Away Chance</th>
+    <th>Away Team</th>
+  </tr>
 {% for game in grade.games %}
   <tr>
-    <td>  </td>
     <td> {{ game.team_home }} </td>
-    <td> {{ game.chance_home }} </td>
-    <td> {{ game.chance_away }} </td>
+    <td> {{ game.chance_home }}% </td>
+    <td> {{ game.chance_away }}% </td>
     <td> {{ game.team_away }} </td>
   </tr>
 {% endfor %}
