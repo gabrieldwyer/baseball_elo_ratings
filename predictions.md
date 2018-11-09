@@ -33,4 +33,4 @@ These are my predictions for the coming round of VSBL baseball:
 </details>
 {% endfor %}
 -----
-Updated: {{ site.data.next_round_predictions.updated }}
+Updated: {{ site.data.next_round_predictions.metadata.updated }}
