@@ -44,6 +44,9 @@ def get_grades_years():
 
 def initalise_next_round_prediction_yaml():
     with open('_data/next_round_predictions.yaml', 'w') as yamlfile:
+        now = datetime.date.today()
+        yamlfile.write('metadata:\n')
+        yamlfile.write(f'  updated: {now}\n')
         yamlfile.write('grades:\n')
 
 
