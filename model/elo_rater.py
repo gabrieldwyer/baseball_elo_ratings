@@ -171,15 +171,7 @@ class Season:
 
         next_round_number = self.results[-1].round_number + 1
 
-        print_table = True
-
-        if print_table:
-            print(f'**{self.display_grade}**')
-            print()
-            print('| Home Team | Home Odds | Away Odds | Away Team |')
-            print('| - | - | - | - |')
-        else:
-            print(f'{self.display_grade} {self.year} Round {next_round_number} Predictions:')
+        print(f'{self.display_grade} {self.year} Round {next_round_number} Predictions:')
 
         if self.fixtures is not None:
             for game in self.fixtures:
@@ -187,12 +179,9 @@ class Season:
                 if game.round_number == next_round_number:
                     exp_val_home = calc_exp_value_home(game)
                     home_win_pc = round(exp_val_home * 100)
-                    if print_table:
-                        print(f'|{game.team_home.name}|{home_win_pc}%|{100-home_win_pc}%|{game.team_away.name}|')
-                    else:
-                        print(f'{game.team_away.name} @ {game.team_home.name}:')
-                        print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
-                        print(f'{game.team_away.name.upper()} chance of winning: {round((1-exp_val_home)*100)}%')
+                    print(f'{game.team_away.name} @ {game.team_home.name}:')
+                    print(f'{game.team_home.name.upper()} chance of winning: {round(exp_val_home*100)}%')
+                    print(f'{game.team_away.name.upper()} chance of winning: {round((1-exp_val_home)*100)}%')
 
         else:
             print(f'Unable to predict games - fixture not found')
@@ -516,63 +505,6 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
         print(f'MSE: {seasons_mse_formatted} at k = {k}, hfa = {hfa}, rf = {regression_factor}')
 
 
-def test_optimise_model():
-    """
-    Use the mean squared error to judge how accurate the model has been historically.
-
-    What parameters can be optimised:
-        - k factor i.e. how important was the last game played?
-        - home field advantage i.e. how much better should you expect to do at home?
-        - regression equation i.e. how is one season related to the next?
-        - margin of victory i.e. how much does margin of victory correlate with wins?
-        - anything else?
-
-    Ideally this is a wide scan of possible extremes, followed by increasingly narrow margins to find the minimum error
-    Translate the mean squared error into a bell curve?
-    Perhaps another method of calculation of how accurate the model is?
-
-    Also, in theory, the model itself could be optimised by refactoring - in terms of simplicity and time taken
-
-    FIDELITY value?
-    """
-    mag = 10 ** 4
-    factor_max = int(mag * random.random())
-    second_factor_max = int(mag * random.random())
-    jump = int(factor_max / 4)
-    second_jump = int(second_factor_max / 4)
-    y_list = []
-    y_dict = {}
-    param_list = []
-
-    for factor_param in range(100, 100 + factor_max, jump):
-        for second_factor_param in range(0, second_factor_max, second_jump):
-            factor_param = factor_param / 10
-            second_factor_param = second_factor_param / 10
-            factor_y = test_function(factor_param, second_factor_param)
-
-            param_list.append(factor_param)
-            param_list.append(second_factor_param)
-
-            y_list.append(factor_y)
-            y_dict[factor_y] = param_list
-
-            param_list = []
-
-            print(f'{factor_param}: \t {factor_y}')
-
-    min_y = min(y_list)
-    print()
-    print(min_y)
-    print(y_dict[min_y])
-
-
-def test_function(x, a=543):
-
-    y = (x - a) ** 2
-
-    return y
-
-
 def guess_who_wins(future_game):
 
     exp_val_home = calc_exp_value_home(future_game)
@@ -596,11 +528,3 @@ k = 200
 regression_factor = 2  # how much of the previous score to get?
 
 iterate_over_seasons(seasons, filter='Division', predict=True)
-
-# optimise_model()
-
-# for k in range(1, 1001, 100):
-#     print()
-#     for regression_factor in range(1, 102, 5):
-#
-#         iterate_over_seasons(seasons, 'A', False, False, True)
