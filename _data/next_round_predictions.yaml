@@ -323,28 +323,28 @@ grades:
       chance_home: 88
       chance_away: 12
   -
-    name: 'Division 4 South - Round  7'
+    name: 'Division 4 South - Round  8'
     games:
     -
       team_home: 'Berwick City Cougars'
-      team_away: 'St Kilda Saints- Black'
+      team_away: 'Bonbeach St Chads Bluejays'
       chance_home: 85
       chance_away: 15
     -
-      team_home: 'Bonbeach St Chads Bluejays'
-      team_away: 'Moorabbin Panthers'
-      chance_home: 71
-      chance_away: 29
+      team_home: 'Moorabbin Panthers'
+      team_away: 'Monash University Farmers'
+      chance_home: 27
+      chance_away: 73
     -
       team_home: 'Pakenham Pumas'
-      team_away: 'Chelsea Dolphins'
-      chance_home: 32
-      chance_away: 68
+      team_away: 'St Kilda Saints- Black'
+      chance_home: 11
+      chance_away: 89
     -
-      team_home: 'St Kilda Saints- Gold'
-      team_away: 'Monash University Farmers'
-      chance_home: 49
-      chance_away: 51
+      team_home: 'Chelsea Dolphins'
+      team_away: 'St Kilda Saints- Gold'
+      chance_home: 14
+      chance_away: 86
   -
     name: 'Womens Division 1 - Round  6'
     games:
