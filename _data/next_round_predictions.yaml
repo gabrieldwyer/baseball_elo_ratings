@@ -1,5 +1,5 @@
 metadata:
-  updated: 2018-11-14
+  updated: 2018-11-17
 grades:
   -
     name: 'Division 1 Firsts - Round  9'
@@ -134,33 +134,33 @@ grades:
       chance_home: 13
       chance_away: 87
   -
-    name: 'Division 2 Firsts - Round  8'
+    name: 'Division 2 Firsts - Round  9'
     games:
+    -
+      team_home: 'Doncaster Dragons'
+      team_away: 'Williamstown Wolves'
+      chance_home: 85
+      chance_away: 15
+    -
+      team_home: 'Malvern Braves'
+      team_away: 'Port Melbourne Mariners'
+      chance_home: 80
+      chance_away: 20
     -
       team_home: 'Mulgrave Rebels'
       team_away: 'Cheltenham Rustlers'
       chance_home: 4
       chance_away: 96
     -
-      team_home: 'Port Melbourne Mariners'
-      team_away: 'Malvern Braves'
-      chance_home: 38
-      chance_away: 62
+      team_home: 'Newport Rams'
+      team_away: 'Bonbeach St Chads Bluejays'
+      chance_home: 96
+      chance_away: 4
     -
-      team_home: 'Springvale Lions'
-      team_away: 'Werribee Giants'
-      chance_home: 5
-      chance_away: 95
-    -
-      team_home: 'Williamstown Wolves'
-      team_away: 'Doncaster Dragons'
-      chance_home: 22
-      chance_away: 78
-    -
-      team_home: 'Bonbeach St Chads Bluejays'
-      team_away: 'Newport Rams'
-      chance_home: 4
-      chance_away: 96
+      team_home: 'Werribee Giants'
+      team_away: 'Springvale Lions'
+      chance_home: 95
+      chance_away: 5
   -
     name: 'Division 2 Fourths - Round  8'
     games:
@@ -305,8 +305,8 @@ grades:
     -
       team_home: 'Mitchell Majors Black'
       team_away: 'Geelong Baycats'
-      chance_home: 66
-      chance_away: 34
+      chance_home: 56
+      chance_away: 44
     -
       team_home: 'Footscray Bulldogs Blue'
       team_away: 'North Coburg Rebels'
@@ -320,8 +320,8 @@ grades:
     -
       team_home: 'Fitzroy Maroon'
       team_away: 'Footscray Bulldogs Red'
-      chance_home: 20
-      chance_away: 80
+      chance_home: 27
+      chance_away: 73
   -
     name: 'Division 4 South - Round  8'
     games:
