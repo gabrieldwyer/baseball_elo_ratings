@@ -15,7 +15,7 @@ ROOT_PATH = os.getcwd()
 MWBL_PATH = '/data/data_mwbl/'
 VSL_PATH = '/data/data_vsl/'
 
-DATA_PATH = ROOT_PATH + VSL_PATH
+DATA_PATH = ROOT_PATH + MWBL_PATH
 
 
 def get_grades_years():
@@ -522,6 +522,7 @@ def guess_rest_of_season(season):
     """
     I want to call the same elo equation with the same parameters EXCEPT using the team.predicted_elo
     """
+    pass
 
 
 seasons = get_grades_years()
@@ -530,4 +531,4 @@ hfa = 0
 k = 200
 regression_factor = 2  # how much of the previous score to get?
 
-iterate_over_seasons(seasons, filter='Division', predict=True)
+iterate_over_seasons(seasons, predict=True)

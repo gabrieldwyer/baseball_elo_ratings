@@ -64,7 +64,7 @@ This README could be improved by adding plain language explanations to a number 
 
 ## Assumptions
 
-Computers operate in binary, whereas humans typically work in decimal. At first glance, this distinction should be largely superficial -  however, it works out that [decimal numbers a represented as binary fractions on computers](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues]. In the same way that 0.3 (3/10) is not precisely 1/3, and neither is 0.33 (3/10 + 3/100), many of these binary fractions approximate the actual value to 53 bits. Ultimately, this problem has a minor to zero effect on the model, but I found it interesting nonetheless. There is the `fraction` module that allows for exact arithmetic fractions, but it's probably overkill to use it here.
+Computers operate in binary, whereas humans typically work in decimal. At first glance, this distinction should be largely superficial -  however, it works out that [decimal numbers a represented as binary fractions on computers](https://docs.python.org/3/tutorial/floatingpoint.html#tut-fp-issues). In the same way that 0.3 (3/10) is not precisely 1/3, and neither is 0.33 (3/10 + 3/100), many of these binary fractions approximate the actual value to 53 bits. Ultimately, this problem has a minor to zero effect on the model, but I found it interesting nonetheless. There is the `fraction` module that allows for exact arithmetic fractions, but it's probably overkill to use it here.
 
 ## Learn more
 
