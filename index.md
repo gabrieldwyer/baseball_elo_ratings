@@ -13,7 +13,7 @@ Also note that the model is nowhere near optimised - it is more than likely that
 
 ----
 
-{%- include prediction_tables.html -%}
+{%- include prediction_grid.html -%}
 
 ----
 
