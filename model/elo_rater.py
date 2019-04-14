@@ -146,6 +146,8 @@ class Season:
 
         display_grade = self.grade
 
+        display_grade = re.sub(r'([A-Z])', r'\1 ', display_grade)
+        display_grade = re.sub(r'( ([a-z]+))', r'\2', display_grade)
         display_grade = re.sub(r'([A-Z][a-z]+)', r'\1 ', display_grade)
         display_grade = re.sub(r'([0-9]+)', r'\1 ', display_grade)
         display_grade = re.sub(r' \)', r')', display_grade)
