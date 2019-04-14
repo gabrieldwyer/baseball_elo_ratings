@@ -1,0 +1,33 @@
+----
+
+<h2>Standing Tables</h2>
+
+<div class="standings-table">
+{% for grade in site.data.current_standings.grades %}
+<details>
+    <summary>{{ grade.name }}</summary>
+<table>
+  <tr>
+    <th></th>
+    <th>Team</th>
+    <th>ELO</th>
+    <th>Win %</th>
+    <th>Runs Scored</th>
+    <th>Runs Allowed</th>
+    <th>Run %</th>
+  </tr>
+{% for team in grade.teams %}
+  <tr>
+    <td> <img src="assets/team_logos/{{ team.team_name }}.png" height="60"> </td>
+    <td> {{ team.team_name }} </td>
+    <td> {{ team.elo }} </td>
+    <td> {{ team.win_percentage }} </td>
+    <td> {{ team.runs_scored }} </td>
+    <td> {{ team.runs_allowed }} </td>
+    <td> {{ team.runs_percentage }} </td>
+  </tr>
+{% endfor %}
+</table>
+</details>
+{% endfor %}
+</div>

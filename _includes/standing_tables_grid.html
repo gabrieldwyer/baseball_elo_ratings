@@ -1,0 +1,30 @@
+----
+
+<h2>Standing Tables (w. css grid)</h2>
+
+{% for grade in site.data.current_standings.grades %}
+<details>
+    <summary>{{ grade.name }}</summary>
+
+    <div class="standings-grid">
+        <section class="team-logo"></section>
+        <section class="team-name"> Team </section>
+        <section class="elo"> Elo </section>
+        <section class="win-percentage"> Win % </section>
+        <section class="runs-scored"> Runs Scored </section>
+        <section class="runs-allowed"> Runs Allowed </section>
+        </div>
+
+{% for team in grade.teams %}
+
+<div class="standings-grid">
+    <section class="team-logo"> <img src="assets/team_logos/{{ team.team_name }}.png" height="60"> </section>
+    <section class="team-name"> {{ team.team_name }} </section>
+    <section class="elo"> {{ team.elo }} </section>
+    <section class="win-percentage"> {{ team.win_percentage }} </section>
+    <section class="runs-scored"> {{ team.runs_scored }} </section>
+    <section class="runs-allowed"> {{ team.runs_allowed }} </section>
+    </div>
+{% endfor %}
+</details>
+{% endfor %}
