@@ -1,8 +1,8 @@
 metadata:
-  updated: 2019-04-20
+  updated: 2019-04-26
 grades:
   -
-    name: 'AFourths - Round  2'
+    name: 'A Fourths - Round  2'
     teams:
     -
       team_name: 'Watsonia'
@@ -75,7 +75,7 @@ grades:
       runs_allowed: '15'
       runs_percentage: '0.2857'
   -
-    name: 'AGrade - Round  2'
+    name: 'A Grade - Round  2'
     teams:
     -
       team_name: 'Greensborough'
@@ -148,7 +148,7 @@ grades:
       runs_allowed: '9'
       runs_percentage: '0.25'
   -
-    name: 'AReserves - Round  2'
+    name: 'A Reserves - Round  2'
     teams:
     -
       team_name: 'Ringwood'
@@ -221,7 +221,7 @@ grades:
       runs_allowed: '25'
       runs_percentage: '0.2188'
   -
-    name: 'AThirds - Round  2'
+    name: 'A Thirds - Round  2'
     teams:
     -
       team_name: 'North Balwyn'
@@ -294,7 +294,7 @@ grades:
       runs_allowed: '25'
       runs_percentage: '0.2424'
   -
-    name: 'BGrade - Round  2'
+    name: 'B Grade - Round  2'
     teams:
     -
       team_name: 'Knox'
@@ -381,7 +381,7 @@ grades:
       runs_allowed: '10'
       runs_percentage: '0.4444'
   -
-    name: 'BReserves - Round  2'
+    name: 'B Reserves - Round  2'
     teams:
     -
       team_name: 'Knox'
@@ -468,7 +468,7 @@ grades:
       runs_allowed: '25'
       runs_percentage: '0.1379'
   -
-    name: 'CGrade - Round  2'
+    name: 'C Grade - Round  2'
     teams:
     -
       team_name: 'St Kilda'
@@ -520,7 +520,7 @@ grades:
       runs_allowed: '17'
       runs_percentage: '0.1905'
   -
-    name: 'CReserves - Round  2'
+    name: 'C Reserves - Round  2'
     teams:
     -
       team_name: 'Research'
@@ -579,7 +579,7 @@ grades:
       runs_allowed: '14'
       runs_percentage: '0.2222'
   -
-    name: 'DGrade - Round  2'
+    name: 'D Grade - Round  2'
     teams:
     -
       team_name: 'La Trobe University'
@@ -673,7 +673,7 @@ grades:
       runs_allowed: '13'
       runs_percentage: '0.0714'
   -
-    name: 'DReserves - Round  2'
+    name: 'D Reserves - Round  2'
     teams:
     -
       team_name: 'Knox'

@@ -1,8 +1,8 @@
 metadata:
-  updated: 2019-04-20
+  updated: 2019-04-26
 grades:
   -
-    name: 'AFourths - Round  3'
+    name: 'A Fourths - Round  3'
     games:
     -
       team_home: 'Forest Hill'
@@ -30,7 +30,7 @@ grades:
       chance_home: 93
       chance_away: 7
   -
-    name: 'AGrade - Round  3'
+    name: 'A Grade - Round  3'
     games:
     -
       team_home: 'GMBC'
@@ -58,7 +58,7 @@ grades:
       chance_home: 34
       chance_away: 66
   -
-    name: 'AReserves - Round  3'
+    name: 'A Reserves - Round  3'
     games:
     -
       team_home: 'GMBC'
@@ -86,7 +86,7 @@ grades:
       chance_home: 29
       chance_away: 71
   -
-    name: 'AThirds - Round  3'
+    name: 'A Thirds - Round  3'
     games:
     -
       team_home: 'Forest Hill'
@@ -114,7 +114,7 @@ grades:
       chance_home: 50
       chance_away: 50
   -
-    name: 'BGrade - Round  3'
+    name: 'B Grade - Round  3'
     games:
     -
       team_home: 'Diamond Creek'
@@ -147,7 +147,7 @@ grades:
       chance_home: 79
       chance_away: 21
   -
-    name: 'BReserves - Round  3'
+    name: 'B Reserves - Round  3'
     games:
     -
       team_home: 'Diamond Creek'
@@ -180,14 +180,104 @@ grades:
       chance_home: 70
       chance_away: 30
   -
-    name: 'CGrade - Round  3'
+    name: 'C Grade - Round  3'
     games:
+    -
+      team_home: 'Croydon'
+      team_away: 'St Kilda'
+      chance_home: 38
+      chance_away: 62
+    -
+      team_home: 'Doncaster'
+      team_away: 'Glen Iris'
+      chance_home: 32
+      chance_away: 68
+    -
+      team_home: 'Wheelers Hill'
+      team_away: 'Waverley'
+      chance_home: 52
+      chance_away: 48
   -
-    name: 'CReserves - Round  3'
+    name: 'C Reserves - Round  3'
     games:
+    -
+      team_home: 'Doncaster'
+      team_away: 'Research'
+      chance_home: 14
+      chance_away: 86
+    -
+      team_home: 'North Balwyn'
+      team_away: 'St Kilda'
+      chance_home: 74
+      chance_away: 26
+    -
+      team_home: 'Northcote Lions'
+      team_away: 'Greensborough'
+      chance_home: 62
+      chance_away: 38
+    -
+      team_home: 'Wheelers Hill'
+      team_away: 'Waverley'
+      chance_home: 25
+      chance_away: 75
   -
-    name: 'DGrade - Round  3'
+    name: 'D Grade - Round  3'
     games:
+    -
+      team_home: 'Footscray'
+      team_away: 'Diamond Creek'
+      chance_home: 48
+      chance_away: 52
+    -
+      team_home: 'Forest Hill Blue'
+      team_away: 'Mordialloc'
+      chance_home: 28
+      chance_away: 72
+    -
+      team_home: 'Knox'
+      team_away: 'Croydon'
+      chance_home: 9
+      chance_away: 91
+    -
+      team_home: 'Melbourne University'
+      team_away: 'La Trobe University'
+      chance_home: 10
+      chance_away: 90
+    -
+      team_home: 'Monash University'
+      team_away: 'Forest Hill Gray'
+      chance_home: 51
+      chance_away: 49
+    -
+      team_home: 'Watsonia'
+      team_away: 'North Coburg Rebels'
+      chance_home: 55
+      chance_away: 45
   -
-    name: 'DReserves - Round  3'
+    name: 'D Reserves - Round  3'
     games:
+    -
+      team_home: 'Footscray'
+      team_away: 'Diamond Creek'
+      chance_home: 17
+      chance_away: 83
+    -
+      team_home: 'Forest Hill Blue'
+      team_away: 'Ringwood'
+      chance_home: 50
+      chance_away: 50
+    -
+      team_home: 'Knox'
+      team_away: 'Croydon'
+      chance_home: 85
+      chance_away: 15
+    -
+      team_home: 'Monash University'
+      team_away: 'Forest Hill Gray'
+      chance_home: 50
+      chance_away: 50
+    -
+      team_home: 'Watsonia'
+      team_away: 'North Coburg Rebels'
+      chance_home: 72
+      chance_away: 28
