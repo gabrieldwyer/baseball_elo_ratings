@@ -6,7 +6,7 @@
     <summary>{{ grade.name }}</summary>
     {% for game in grade.games %}
     <div class="predictions-grid">
-        <section class="home-logo"><img src="{{ site.url }}/assets/team_logos/{{ game.team_home }}.png" height="60"></section>
+        <section class="home-logo"><img src="../assets/team_logos/{{ game.team_home }}.png" height="60"></section>
         <section class="home-name">{{ game.team_home }}</section>
         <section class="at-symbol" style="font-size: 20px">@</section>
         <section class="away-name">{{ game.team_away }}</section>
@@ -15,7 +15,7 @@
             <div class="chance-bar chance-bar-divider"></div>
             <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;">{{ game.chance_home }}%</div> </section>
         <section class="away-name"></section>
-        <section class="away-logo"><img src="{{ site.url }}/assets/team_logos/{{ game.team_away }}.png" height="60"></section>
+        <section class="away-logo"><img src="../assets/team_logos/{{ game.team_away }}.png" height="60"></section>
     </div>
     {% endfor %}
 </details>
