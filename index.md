@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## Actual content
+## Elo Predictions
 
 These are my predictions for the coming round of MWBL baseball:
 
@@ -10,17 +10,6 @@ These are my predictions for the coming round of MWBL baseball:
 While future efforts will be more heavily and cleanly automated, for the time being this page is manually updated by me. Please be patient.
 
 Also note that the model is nowhere near optimised - it is more than likely that changes to the model will greatly affect the predictions. Take these as a current best guess...
-
-
-----
-## Thinking
-
-I need to have a bit of a think about the design of this page full stop. But hopefully it will be nice before the start of next week. By that time, I should have the first week of results to input and build my model. Then, at least, I can have that here.
-
-ALSO - get google analytics working here.
-
-
-Also think about having it fulfil one of Free Code Camp's criteria?
 
 ----
 
@@ -32,3 +21,12 @@ Also think about having it fulfil one of Free Code Camp's criteria?
 
 ----
 Updated: {{ site.data.next_round_predictions.metadata.updated }}
+
+----
+
+<details>
+<summary>A note on permissions.</summary>
+
+<p>Neither the MWBL nor any of the teams have formally given their consent for the data and images used by this site. However, both the data and the images were sourced from publicly available resources, with minor alteration. If you are responsible for these images and would like them to be removed from this site, or would like to provide a formal endorsement of their use, please get in touch.</p>
+
+</details>
