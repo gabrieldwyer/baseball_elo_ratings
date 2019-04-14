@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-  {%- include head.html -%}
+    {%- include head.html -%}
 
-  <body>
+    <body>
 
-    {%- include header.html -%}
+        {%- include header.html -%}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </main>
+        <main class="content" aria-label="Content">
+            <div class="wrapper">
+                <img src="/assets/mwbl_logo.png">
+                <h2>Melbourne Winter Baseball League</h2>
+                <h3>2019 Season</h3>
+                <hr>
+                {{ content }}
+            </div>
+        </main>
 
-    {%- include footer.html -%}
 
-  </body>
-
+        {%- include footer.html -%}
+    </body>
 </html>

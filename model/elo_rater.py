@@ -50,6 +50,14 @@ def initalise_next_round_prediction_yaml():
         yamlfile.write('grades:\n')
 
 
+def initalise_current_standings_yaml():
+    with open('_data/current_standings.yaml', 'w') as yamlfile:
+        now = datetime.date.today()
+        yamlfile.write('metadata:\n')
+        yamlfile.write(f'  updated: {now}\n')
+        yamlfile.write('grades:\n')
+
+
 @dataclass
 class Season:
     year: int
@@ -218,6 +226,27 @@ class Season:
             print(f'Unable to predict games - fixture not found')
             pass
 
+    def append_current_standings_yaml(self):
+
+        next_round_number = self.results[-1].round_number + 1
+        indent_spaces = '    '
+
+        with open('_data/current_standings.yaml', 'a') as yamlfile:
+            yamlfile.write(f'  -\n')
+            yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number}\'\n')
+            yamlfile.write(f'{indent_spaces}teams:\n')
+            for team in self.standings:
+                print('YAY')
+                yamlfile.write(f'{indent_spaces}-\n')
+                indent_spaces += '  '
+                yamlfile.write(f'{indent_spaces}team_name: \'{team.name}\'\n')
+                yamlfile.write(f'{indent_spaces}elo: \'{round(team.elo)}\'\n')
+                yamlfile.write(f'{indent_spaces}win_percentage: \'{round(team.win_percentage, 4)}\'\n')
+                yamlfile.write(f'{indent_spaces}runs_scored: \'{team.runs_scored}\'\n')
+                yamlfile.write(f'{indent_spaces}runs_allowed: \'{team.runs_allowed}\'\n')
+                yamlfile.write(f'{indent_spaces}runs_percentage: \'{round(team.runs_percentage, 4)}\'\n')
+                indent_spaces = '    '
+
     @staticmethod
     def get_team_from_name_string(teams, team_name_string):
         for team in teams:
@@ -246,7 +275,7 @@ class Game:
         team_away = Season.get_team_from_name_string(teams, game_dict['team_away'])
 
         date_time = game_dict['date_time']
-        round_number = int(game_dict['round_number'])
+        round_number = int(float(game_dict['round_number']))
 
         # Game.try_key(game_dict, 'ground')
         # ground = game_dict['ground']
@@ -477,6 +506,7 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
 
     if predict:
         initalise_next_round_prediction_yaml()
+        initalise_current_standings_yaml()
 
     for season in seasons:
         grade, year, data_type = season
@@ -501,6 +531,7 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
         if predict and year == CURRENT_YEAR:
             Season.predict_next_round(season)
             Season.append_next_round_prediction_yaml(season)
+            Season.append_current_standings_yaml(season)
 
     if count_error and n_games:
         seasons_mse = seasons_tse / n_games
@@ -531,4 +562,4 @@ hfa = 0
 k = 200
 regression_factor = 2  # how much of the previous score to get?
 
-iterate_over_seasons(seasons, predict=True)
+iterate_over_seasons(seasons, print_standings=True, predict=True)
