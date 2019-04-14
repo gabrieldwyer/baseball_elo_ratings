@@ -4,6 +4,7 @@
 {% for grade in site.data.next_round_predictions.grades %}
 <details>
     <summary>{{ grade.name }}</summary>
+    <hr>
     {% for game in grade.games %}
     <div class="predictions-grid">
         <section class="home-logo"><img src="assets/team_logos/{{ game.team_home }}.png" height="60"></section>
