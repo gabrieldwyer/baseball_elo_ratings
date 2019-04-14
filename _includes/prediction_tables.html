@@ -15,7 +15,7 @@
   </tr>
 {% for game in grade.games %}
   <tr>
-    <td> <img src="../assets/team_logos/{{ game.team_home}}.png" height="60" class="img-left"> </td>
+    <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/team_logos/{{ game.team_home}}.png" height="60" class="img-left"> </td>
     <td> {{ game.team_home }} </td>
     <td>
     <div class="chance-bar-wrapper">
@@ -25,7 +25,7 @@
     </div></td>
 
     <td> {{ game.team_away }} </td>
-    <td> <img src="../assets/team_logos/{{ game.team_away}}.png" height="60"> </td>
+    <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/team_logos/{{ game.team_away}}.png" height="60"> </td>
   </tr>
 {% endfor %}
 </table>

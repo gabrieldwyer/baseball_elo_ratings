@@ -18,7 +18,7 @@
   </tr>
 {% for team in grade.teams %}
   <tr>
-    <td> <img src="../assets/team_logos/{{ team.team_name }}.png" height="60"> </td>
+    <td> <img src="{{ site.url }}{{ site.baseurl }}/assets/team_logos/{{ team.team_name }}.png" height="60"> </td>
     <td> {{ team.team_name }} </td>
     <td> {{ team.elo }} </td>
     <td> {{ team.win_percentage }} </td>
