@@ -18,7 +18,7 @@
 {% for team in grade.teams %}
 
 <div class="standings-grid">
-    <section class="team-logo"> <img src="assets/team_logos/{{ team.team_name }}.png" height="60"> </section>
+    <section class="team-logo"> <img src="{{ site.url }}/assets/team_logos/{{ team.team_name }}.png" height="60"> </section>
     <section class="team-name"> {{ team.team_name }} </section>
     <section class="elo"> {{ team.elo }} </section>
     <section class="win-percentage"> {{ team.win_percentage }} </section>
