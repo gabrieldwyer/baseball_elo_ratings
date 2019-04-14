@@ -233,10 +233,9 @@ class Season:
 
         with open('_data/current_standings.yaml', 'a') as yamlfile:
             yamlfile.write(f'  -\n')
-            yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number}\'\n')
+            yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number - 1}\'\n')
             yamlfile.write(f'{indent_spaces}teams:\n')
             for team in self.standings:
-                print('YAY')
                 yamlfile.write(f'{indent_spaces}-\n')
                 indent_spaces += '  '
                 yamlfile.write(f'{indent_spaces}team_name: \'{team.name}\'\n')
