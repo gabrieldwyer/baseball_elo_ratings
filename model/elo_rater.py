@@ -42,16 +42,8 @@ def get_grades_years():
     return files_tuple
 
 
-def initalise_next_round_prediction_yaml():
-    with open('_data/next_round_predictions.yaml', 'w') as yamlfile:
-        now = datetime.date.today()
-        yamlfile.write('metadata:\n')
-        yamlfile.write(f'  updated: {now}\n')
-        yamlfile.write('grades:\n')
-
-
-def initalise_current_standings_yaml():
-    with open('_data/current_standings.yaml', 'w') as yamlfile:
+def initalise_yaml_output(filename):
+    with open(f'_data/{filename}.yaml', 'w') as yamlfile:
         now = datetime.date.today()
         yamlfile.write('metadata:\n')
         yamlfile.write(f'  updated: {now}\n')
@@ -163,7 +155,7 @@ class Season:
         print('-')
         self.print_season_info()
         print('-')
-        print('TEAM', ' ' * (self.longest_name - 5), 'W%', 'ELO', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
+        print('TEAM', ' ' * (self.longest_name - 5), 'W%', 'ELO', '%R', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
         for team in self.standings:
             Team.print_team(team, self.longest_name)
         print('-')
@@ -242,10 +234,10 @@ class Season:
                 indent_spaces += '  '
                 yamlfile.write(f'{indent_spaces}team_name: \'{team.name}\'\n')
                 yamlfile.write(f'{indent_spaces}elo: \'{round(team.elo)}\'\n')
-                yamlfile.write(f'{indent_spaces}win_percentage: \'{round(team.win_percentage, 4)}\'\n')
+                yamlfile.write(f'{indent_spaces}win_percentage: \'{team.display_win_percentage}\'\n')
                 yamlfile.write(f'{indent_spaces}runs_scored: \'{team.runs_scored}\'\n')
                 yamlfile.write(f'{indent_spaces}runs_allowed: \'{team.runs_allowed}\'\n')
-                yamlfile.write(f'{indent_spaces}runs_percentage: \'{round(team.runs_percentage, 4)}\'\n')
+                yamlfile.write(f'{indent_spaces}runs_percentage: \'{team.display_runs_percentage}\'\n')
                 indent_spaces = '    '
 
     @staticmethod
@@ -417,6 +409,14 @@ class Team:
     def win_percentage(self):
         return self.calc_stat_percent(up=self.wins, down=self.losses)
 
+    @property
+    def display_win_percentage(self):
+        return '{:.3f}'.format(round(self.win_percentage, ndigits=3))
+
+    @property
+    def display_runs_percentage(self):
+        return '{:.3f}'.format(round(self.runs_percentage, ndigits=3))
+
     @staticmethod
     def regress_elo(elo):
         regressed_elo = (float(elo) / regression_factor) + 1500 * ((regression_factor - 1) / regression_factor)
@@ -432,8 +432,10 @@ class Team:
     def print_team(self, longest_name=0):
 
         print(self.name, ' ' * (longest_name - len(self.name)),
-              f'\t{round(self.win_percentage, ndigits=3)}\t{round(self.elo)}\t',
-              f'{self.wins}\t{self.losses}\t{self.draws}')
+              f'\t{self.display_win_percentage}',
+              f'\t{round(self.elo)}',
+              f'\t{self.display_runs_percentage}',
+              f'\t{self.wins}\t{self.losses}\t{self.draws}')
 
 
 def calc_exp_value_home(game):
@@ -506,8 +508,8 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
     n_games = 0
 
     if predict:
-        initalise_next_round_prediction_yaml()
-        initalise_current_standings_yaml()
+        initalise_yaml_output('current_standings')
+        initalise_yaml_output('next_round_predictions')
 
     for season in seasons:
         grade, year, data_type = season
