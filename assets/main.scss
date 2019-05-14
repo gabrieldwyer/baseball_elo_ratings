@@ -49,7 +49,7 @@ header>h1 {
 
 .wrapper {
     text-align: center;
-    margin: 5% 15% 1%;
+    margin: 5% 10% 1%;
 }
 
 .wrapper>h2 {
@@ -189,6 +189,7 @@ footer {
 
 //@media only screen and (min-width:480px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
 @media only screen and (min-width:720px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    margin: 5% 15% 1%;
     .at-symbol {grid-area: 1 / 3 / 1 / 4;}
     .home-name {grid-area: 1 / 4 / 1 / 4; justify-self: left; direction: ltr;}
     .home-logo {grid-area: 1 / 5 / 1 / 5; justify-self: right; padding: 5px;}
