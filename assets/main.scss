@@ -176,6 +176,8 @@ footer {
     test-justify: distribute;
 }
 
+.team-logo>img { height: 36px;}
+
 
 //@media only screen and (min-width:400px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
 
@@ -189,6 +191,7 @@ footer {
 
 //@media only screen and (min-width:480px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
 @media only screen and (min-width:720px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    .team-logo>img { height: 48px;}
     .wrapper {margin: 5% 15% 1%;}
     .at-symbol {grid-area: 1 / 3 / 1 / 4;}
     .home-name {grid-area: 1 / 4 / 1 / 4; justify-self: left; direction: ltr;}
