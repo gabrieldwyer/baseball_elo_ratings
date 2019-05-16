@@ -3,11 +3,11 @@
 
 {% for grade in site.data.next_round_predictions.grades %}
 <details>
-    <summary>{{ grade.name }}</summary>
+    <summary>{{ grade.name }} - Round {{ grade.round_number }}</summary>
     <hr>
     {% for game in grade.games %}
     <div class="predictions-grid">
-        <section class="home-logo"><img src="assets/team_logos/{{ game.team_home }}.png" height="60"></section>
+        <section class="home-logo team-logo"><img src="assets/team_logos/{{ game.team_home }}.png"></section>
         <section class="home-name">{{ game.team_home }}</section>
         <section class="at-symbol" style="font-size: 20px">@</section>
         <section class="away-name">{{ game.team_away }}</section>
@@ -16,7 +16,17 @@
             <div class="chance-bar chance-bar-divider"></div>
             <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;">{{ game.chance_home }}%</div> </section>
         <section class="away-name"></section>
-        <section class="away-logo"><img src="assets/team_logos/{{ game.team_away }}.png" height="60"></section>
+        <section class="away-logo team-logo"><img src="assets/team_logos/{{ game.team_away }}.png"></section>
+
+        <span>{{ game.record_home }}</span>
+        <span>{{ game.record_away }}</span>
+
+        {% for team in site.data.record.grades[grade.name] %}
+            {% if team.name == game.team_away %}
+            <span>{{ team[game.team_home] }}</span>
+            {% endif %}
+        {% endfor %}
+
     </div>
     {% endfor %}
 </details>
