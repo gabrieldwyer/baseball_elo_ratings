@@ -229,12 +229,14 @@ class Season:
 
     def append_current_standings_yaml(self):
 
-        next_round_number = self.results[-1].round_number + 1
+        round_number = self.results[-1].round_number
         indent_spaces = '    '
 
         with open('_data/current_standings.yaml', 'a') as yamlfile:
+
             yamlfile.write(f'  -\n')
-            yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number - 1}\'\n')
+            yamlfile.write(f'{indent_spaces}name: \'{self.display_grade}\'\n')
+            yamlfile.write(f'{indent_spaces}round_number: {round_number}\n')
             yamlfile.write(f'{indent_spaces}teams:\n')
             for team in self.standings:
                 yamlfile.write(f'{indent_spaces}-\n')

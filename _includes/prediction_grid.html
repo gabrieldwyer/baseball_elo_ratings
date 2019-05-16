@@ -18,15 +18,6 @@
         <section class="away-name"></section>
         <section class="away-logo team-logo"><img src="assets/team_logos/{{ game.team_away }}.png"></section>
 
-        <span>{{ game.record_home }}</span>
-        <span>{{ game.record_away }}</span>
-
-        {% for team in site.data.record.grades[grade.name] %}
-            {% if team.name == game.team_away %}
-            <span>{{ team[game.team_home] }}</span>
-            {% endif %}
-        {% endfor %}
-
     </div>
     {% endfor %}
 </details>

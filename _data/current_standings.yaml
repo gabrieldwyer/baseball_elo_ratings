@@ -1,8 +1,9 @@
 metadata:
-  updated: 2019-05-14
+  updated: 2019-05-16
 grades:
   -
-    name: 'A Fourths - Round  5'
+    name: 'A Fourths'
+    round_number: 5
     teams:
     -
       team_name: 'Watsonia'
@@ -75,7 +76,8 @@ grades:
       runs_allowed: '48'
       runs_percentage: '0.342'
   -
-    name: 'A Grade - Round  5'
+    name: 'A Grade'
+    round_number: 5
     teams:
     -
       team_name: 'North Balwyn'
@@ -148,7 +150,8 @@ grades:
       runs_allowed: '49'
       runs_percentage: '0.183'
   -
-    name: 'A Reserves - Round  5'
+    name: 'A Reserves'
+    round_number: 5
     teams:
     -
       team_name: 'Ringwood'
@@ -221,7 +224,8 @@ grades:
       runs_allowed: '58'
       runs_percentage: '0.293'
   -
-    name: 'A Thirds - Round  5'
+    name: 'A Thirds'
+    round_number: 5
     teams:
     -
       team_name: 'Watsonia'
@@ -294,7 +298,8 @@ grades:
       runs_allowed: '52'
       runs_percentage: '0.257'
   -
-    name: 'B Grade - Round  5'
+    name: 'B Grade'
+    round_number: 5
     teams:
     -
       team_name: 'Knox'
@@ -381,7 +386,8 @@ grades:
       runs_allowed: '34'
       runs_percentage: '0.370'
   -
-    name: 'B Reserves - Round  5'
+    name: 'B Reserves'
+    round_number: 5
     teams:
     -
       team_name: 'Knox'
@@ -468,7 +474,8 @@ grades:
       runs_allowed: '86'
       runs_percentage: '0.131'
   -
-    name: 'C Grade - Round  5'
+    name: 'C Grade'
+    round_number: 5
     teams:
     -
       team_name: 'Croydon'
@@ -534,7 +541,8 @@ grades:
       runs_allowed: '11'
       runs_percentage: '0.154'
   -
-    name: 'C Reserves - Round  5'
+    name: 'C Reserves'
+    round_number: 5
     teams:
     -
       team_name: 'Waverley'
