@@ -75,17 +75,19 @@ class Season:
 
         teams = []
         bye = ['bye', 'baseball victoria']
+        try:
+            with open(f'{DATA_PATH}{self.grade}_{self.year}_results.csv') as csvfile:
+                results_csv = csv.DictReader(csvfile)
 
-        with open(f'{DATA_PATH}{self.grade}_{self.year}_results.csv') as csvfile:
-            results_csv = csv.DictReader(csvfile)
-
-            for game in results_csv:
-                team_home = game.get('team_home')
-                if team_home.lower() != 'bye' and team_home.lower() != 'baseball victoria':
-                    teams.append(Team(team_home, self.grade, int(self.year)))
-                team_away = game.get('team_away')
-                if team_away.lower() != 'bye' and team_away.lower() != 'baseball victoria':
-                    teams.append(Team(team_away, self.grade, int(self.year)))
+                for game in results_csv:
+                    team_home = game.get('team_home')
+                    if team_home.lower() != 'bye' and team_home.lower() != 'baseball victoria':
+                        teams.append(Team(team_home, self.grade, int(self.year)))
+                    team_away = game.get('team_away')
+                    if team_away.lower() != 'bye' and team_away.lower() != 'baseball victoria':
+                        teams.append(Team(team_away, self.grade, int(self.year)))
+        except FileNotFoundError:
+            print(f'No file found for {self.grade} in {self.year}')
         teams = set(teams)
         return tuple(teams)
 
@@ -117,13 +119,16 @@ class Season:
                 pass
 
     def initalise_longest_team_name(self):
-        return max(len(team.name) for team in self.teams)
+        try:
+            return max(len(team.name) for team in self.teams)
+        except ValueError:
+            return 0
 
     @property
     def standings(self):
 
         standings = self.teams
-        rank_string = 'win_percentage - wins - losses - draws - runs_scored - runs_allowed'
+        rank_string = 'points - runs_percentage - win_percentage - wins - losses - draws - runs_scored - runs_allowed'
         rank_order = rank_string.split(' - ')
 
         for attribute in reversed(rank_order):  # sort from the least important to most important ranking
@@ -155,7 +160,8 @@ class Season:
         print('-')
         self.print_season_info()
         print('-')
-        print('TEAM', ' ' * (self.longest_name - 5), 'W%', 'ELO', '%R', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
+        print('TEAM', end='')
+        print(' ' * (self.longest_name - 4), 'W%', 'ELO', '%R', 'WINS', 'LOSSES', 'DRAWS', sep='\t')
         for team in self.standings:
             Team.print_team(team, self.longest_name)
         print('-')
@@ -202,7 +208,8 @@ class Season:
         if self.fixtures is not None:
             with open('_data/next_round_predictions.yaml', 'a') as yamlfile:
                 yamlfile.write(f'  -\n')
-                yamlfile.write(f'{indent_spaces}name: \'{self.display_grade} - Round  {next_round_number}\'\n')
+                yamlfile.write(f'{indent_spaces}name: \'{self.display_grade}\'\n')
+                yamlfile.write(f'{indent_spaces}round_number: {next_round_number}\n')
                 yamlfile.write(f'{indent_spaces}games:\n')
 
                 for game in self.fixtures:
@@ -417,6 +424,13 @@ class Team:
     def display_runs_percentage(self):
         return '{:.3f}'.format(round(self.runs_percentage, ndigits=3))
 
+    @property
+    def pythagorean_exp(self):
+        try:
+            return 1 / (1 + (self.runs_allowed / self.runs_scored)**1.83)
+        except ZeroDivisionError:
+            return 0
+
     @staticmethod
     def regress_elo(elo):
         regressed_elo = (float(elo) / regression_factor) + 1500 * ((regression_factor - 1) / regression_factor)
@@ -435,7 +449,8 @@ class Team:
               f'\t{self.display_win_percentage}',
               f'\t{round(self.elo)}',
               f'\t{self.display_runs_percentage}',
-              f'\t{self.wins}\t{self.losses}\t{self.draws}')
+              f'\t{self.wins}\t{self.losses}\t{self.draws}'
+              f'\t{round(self.pythagorean_exp, 3)}')
 
 
 def calc_exp_value_home(game):
