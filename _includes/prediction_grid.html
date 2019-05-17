@@ -1,5 +1,5 @@
 ----
-<h2>Prediction Tables (w. css grid)</h2>
+<h2>Prediction Tables</h2>
 
 {% for grade in site.data.next_round_predictions.grades %}
 <details>
@@ -7,16 +7,16 @@
     <hr>
     {% for game in grade.games %}
     <div class="predictions-grid">
-        <section class="home-logo team-logo"><img src="assets/team_logos/{{ game.team_home }}.png"></section>
-        <section class="home-name">{{ game.team_home }}</section>
-        <section class="at-symbol" style="font-size: 20px">@</section>
-        <section class="away-name">{{ game.team_away }}</section>
-        <section class="chance-bar-wrapper">
+        <span class="team-logo home-logo"><img src="assets/team_logos/{{ game.team_home }}.png"></span>
+        <span class="home-name">{{ game.team_home }}</span>
+        <span class="at-symbol" style="font-size: 20px">@</span>
+        <span class="away-name">{{ game.team_away }}</span>
+        <span class="chance-bar-wrapper">
             <div class="{{ game.team_away | replace: " ", "-"  }} chance-bar chance-bar-right" style="width:{{ game.chance_away }}%;">{{ game.chance_away }}%</div>
             <div class="chance-bar chance-bar-divider"></div>
-            <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;">{{ game.chance_home }}%</div> </section>
-        <section class="away-name"></section>
-        <section class="away-logo team-logo"><img src="assets/team_logos/{{ game.team_away }}.png"></section>
+            <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;">{{ game.chance_home }}%</div> </span>
+        <span class="away-name"></span>
+        <span class="team-logo away-logo"><img src="assets/team_logos/{{ game.team_away }}.png"></span>
 
     </div>
     {% endfor %}

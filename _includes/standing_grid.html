@@ -1,0 +1,33 @@
+----
+
+<h2>Standing Tables</h2>
+
+{% for grade in site.data.current_standings.grades %}
+<details>
+    <summary>{{ grade.name }} - Round {{grade.round_number}}</summary>
+
+    <div class="standings-grid">
+        <span class="standings-logo team-logo"> </span>
+        <span class="team-name short-text"> Team </span>
+        <span class="elo short-text"> ELO </span>
+        <span class="win-percentage full-text"> Win % </span>
+        <span class="win-percentage short-text"> W% </span>
+        <span class="runs-scored full-text"> Runs Scored </span>
+        <span class="runs-scored short-text"> RS </span>
+        <span class="runs-allowed full-text"> Runs Allowed </span>
+        <span class="runs-allowed short-text"> RA </span>
+        </div>
+
+{% for team in grade.teams %}
+
+<div class="standings-grid">
+    <span class="standings-logo team-logo"> <img src="assets/team_logos/{{ team.team_name }}.png"> </span>
+    <span class="team-name"> {{ team.team_name }} </span>
+    <span class="stat-tag">ELO :</span><span class="elo stat"> {{ team.elo }} </span>
+    <span class="stat-tag">W% :</span><span class="win-percentage stat"> {{ team.win_percentage }} </span>
+    <span class="stat-tag">RS :</span><span class="runs-scored stat"> {{ team.runs_scored }} </span>
+    <span class="stat-tag">RA :</span><span class="runs-allowed stat" > {{ team.runs_allowed }} </span>
+    </div>
+{% endfor %}
+</details>
+{% endfor %}

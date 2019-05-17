@@ -17,7 +17,7 @@ Also note that the model is nowhere near optimised - it is more than likely that
 
 ----
 
-{%- include standing_tables.html -%}
+{%- include standing_grid.html -%}
 
 ----
 Updated: {{ site.data.next_round_predictions.metadata.updated }}
