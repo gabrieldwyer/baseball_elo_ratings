@@ -16,6 +16,8 @@
         <span class="runs-scored short-text"> RS </span>
         <span class="runs-allowed full-text"> Runs Allowed </span>
         <span class="runs-allowed short-text"> RA </span>
+        <span class="runs-percentage full-text"> Runs % </span>
+        <span class="runs-percentage short-text"> R% </span>
         </div>
 
 {% for team in grade.teams %}
@@ -27,6 +29,7 @@
     <span class="stat-tag"> W% : </span><span class="win-percentage stat"> {{ team.win_percentage }} </span>
     <span class="stat-tag"> RS : </span><span class="runs-scored stat"> {{ team.runs_scored }} </span>
     <span class="stat-tag"> RA : </span><span class="runs-allowed stat" > {{ team.runs_allowed }} </span>
+    <span class="stat-tag"> R% : </span><span class="runs-percentage stat" > {{ team.runs_percentage }} </span>
     </div>
 {% endfor %}
 </details>
