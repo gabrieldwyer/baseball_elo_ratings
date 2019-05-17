@@ -182,7 +182,7 @@ footer {
     border-bottom: 1px solid black;
     margin-top: 10px;
     display: grid;
-    grid-gap: 30px;
+    grid-gap: 12px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1 auto;
     align-items: center;
@@ -204,7 +204,7 @@ footer {
 .full-text {display: none;}
 .standings-logo {grid-area: 1/1/1/3;}
 .standings-logo>img {height: 96px;}
-.team-name {grid-area: 2/1/2/3;}
+.team-name {grid-area: 2/1/2/3; border-bottom: 2px solid black;}
 .elo {grid-area: 3/2/3/2;}
 .win-percentage {grid-area: 4/2/4/2;}
 .runs-scored {grid-area: 5/2/5/2;}
@@ -213,7 +213,7 @@ footer {
 .stat {justify-self:left;}
 
 //@media only screen and (min-width:480px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
-@media only screen and (min-width:720px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+@media only screen and (min-width:540px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
     .team-logo>img {height: 48px;}
     .short-text {display:inline;}
     .at-symbol {grid-area: 1 / 3 / 1 / 4;}
@@ -223,15 +223,22 @@ footer {
     .away-logo {grid-area: 1 / 1 / 1 / 2; justify-self: left; padding: 5px;}
     .chance-bar-wrapper {grid-area: 2 / 1 / 2 / 6;}
 
-    .standings-grid {grid-template-columns: 120px 150px 1fr 1fr 1fr 1fr;}
+    .standings-grid {grid-template-columns: 120px 130px 1fr 1fr 1fr 1fr;}
     .standings-logo {grid-area: 1 / 1 / 1 / 2;}
-    .team-name {grid-area: 1 / 2 / 1 / 3;}
+    .team-name {grid-area: 1 / 2 / 1 / 3; border-bottom: none;}
     .elo {grid-area: 1/3/1/4;}
     .stat-tag {display: none;}
     .win-percentage {grid-area: 1/4/1/5;}
     .runs-scored {grid-area: 1/5/1/6;}
     .runs-allowed {grid-area: 1/6/1/7;}
+
+    .stat {justify-self:center;}
 }
+
+@media only screen and (min-width:720px) {
+    .standings-grid {grid-template-columns: 120px 200px 1fr 1fr 1fr 1fr;}
+}
+
 @media only screen and (min-width:1200px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */
     .wrapper {margin: 5% 15% 1%;}
     .short-text {display: none;}
