@@ -164,9 +164,9 @@ footer {
 
 .predictions-grid {
     font-family: $monospace;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-    margin-top: 10px;
+    margin: 20px;
+    padding: 20px 40px;
+    //border-bottom: 1px solid black;
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 100px auto 20px auto 100px;
@@ -174,19 +174,35 @@ footer {
     align-items: center;
     //text-align: justify;
     test-justify: distribute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
 }
 
 .standings-grid {
     font-family: $monospace;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-    margin-top: 10px;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1 auto;
     align-items: center;
-    justify-items: center;
+    justify-items: middle;
+}
+
+.standings-grid-team {
+    padding: 10px 0px;
+    align-items: center;
+    justify-items: middle;
+}
+
+.standings-grid-header {
+    margin-bottom:10px;
+}
+
+.standings-grid-wrapper {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
 }
 
 .team-logo>img {height: 36px;}
@@ -204,12 +220,12 @@ footer {
 .full-text {display: none;}
 .standings-logo {grid-area: 1/1/1/3;}
 .standings-logo>img {height: 96px;}
-.team-name {grid-area: 2/1/2/3; border-bottom: 2px solid black;}
+.team-name {grid-area: 2/1/2/3; text-decoration: underline;}
 .elo {grid-area: 3/2/3/2;}
 .win-percentage {grid-area: 4/2/4/2;}
 .runs-scored {grid-area: 5/2/5/2;}
 .runs-allowed {grid-area: 6/2/6/2;}
-.stat-tag {justify-self:right;}
+.stat-tag {justify-self:right; font-weight: bold;}
 .stat {justify-self:left;}
 
 //@media only screen and (min-width:480px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
@@ -224,6 +240,8 @@ footer {
     .chance-bar-wrapper {grid-area: 2 / 1 / 2 / 6;}
 
     .standings-grid {grid-template-columns: 113px 130px 1fr 1fr 1fr 1fr 1fr;}
+    .standings-grid-team {border-top: 1px solid black;}
+    .team-name{text-decoration:none;}
     .standings-logo {grid-area: 1 / 1 / 1 / 2;}
     .team-name {grid-area: 1 / 2 / 1 / 3; border-bottom: none;}
     .elo {grid-area: 1/3/1/4;}
