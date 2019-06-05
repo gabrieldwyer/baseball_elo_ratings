@@ -1,5 +1,10 @@
 // Unfinished
 
+.Melbourne-University-White, .Latrobe-University-White, .Forest-Hill-White {
+    background-color: #FFFFFF;
+    color: #1d1d1d;
+}
+
 .Bundoora {
     background-color: #2642FD;
 }
@@ -24,7 +29,7 @@
     background-color: #AF141C;
 }
 
-.Forest-Hill {
+.Forest-Hill, .Forest-Hill-Gray {
     background-color: #BCBDC2;
 }
 
@@ -32,15 +37,11 @@
     background-color: #023F7E;
 }
 
-.Forest-Hill-Gray {
-    background-color: #BCBDC2;
-}
-
 .Glen-Iris {
     background-color: #050747;
 }
 
-.GMBC, .St-Kilda-Black {
+.GMBC, .St-Kilda-Black, .Latrobe-University-Black {
     background-color: #000000;
 }
 
@@ -60,7 +61,7 @@
     background-color: #EE1C24;
 }
 
-.Melbourne-University {
+.Melbourne-University, .Melbourne-University-Blue {
     background-color: #214F80;
 }
 
