@@ -519,7 +519,7 @@ def calc_mean_squared_error(seasons):
     return diff_value_total / n_games
 
 
-def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=False, count_error=False):
+def iterate_over_seasons(seasons, filter=False, filter_out=False, print_standings=False, predict=False, count_error=False):
 
     seasons_tse = 0
     n_games = 0
@@ -532,6 +532,9 @@ def iterate_over_seasons(seasons, filter=False, print_standings=False, predict=F
         grade, year, data_type = season
         if filter:
             if filter not in grade:
+                continue
+        if filter_out:
+            if filter_out in grade:
                 continue
         season = Season(year, grade)
         season.display_grade
@@ -582,4 +585,4 @@ hfa = 0
 k = 200
 regression_factor = 2  # how much of the previous score to get?
 
-iterate_over_seasons(seasons, print_standings=True, predict=True)
+iterate_over_seasons(seasons, print_standings=True, predict=True, filter_out="Under")
