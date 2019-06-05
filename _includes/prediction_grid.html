@@ -1,9 +1,8 @@
 ----
 <h2>Prediction Tables</h2>
 
-{% assign colours = "Blue, White, Gray, Red, Black" %}
-
 {% for grade in site.data.next_round_predictions.grades %}
+{% if grade.games.size > 0 %}
 <details>
     <summary>{{ grade.name }} - Round {{ grade.round_number }}</summary>
     <hr>
@@ -22,5 +21,7 @@
 
     </div>
     {% endfor %}
+    <hr>
 </details>
+{% endif %}
 {% endfor %}
