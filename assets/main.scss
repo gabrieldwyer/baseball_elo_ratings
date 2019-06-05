@@ -18,7 +18,7 @@ html, body {
 }
 
 html {
-    font-size: calc(1em + 1vw);
+    font-size: calc(1em + 0.8vw);
 }
 
 
@@ -58,6 +58,8 @@ header>h1 {
 
 .wrapper>h2 {
     padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
 
 }
 
