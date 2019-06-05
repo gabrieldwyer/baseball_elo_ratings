@@ -17,13 +17,17 @@ html, body {
     height: 100%;
 }
 
+html {
+    font-size: calc(1em + 1vw);
+}
+
+
 body {
     background-color: #eeeeee;
     display: flex;
     flex-direction: column;
     font-family: $sans-serif;
     color: black;
-    font-size: 125%;
 }
 
 header {
@@ -280,6 +284,7 @@ footer {
 
 input {
     display: none;
+    font-size: inherit;
 }
 
 .toggle {
