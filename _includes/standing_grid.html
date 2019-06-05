@@ -5,8 +5,8 @@
 {% for grade in site.data.current_standings.grades %}
 <details>
     <summary>{{ grade.name }} - Round {{grade.round_number}}</summary>
-
-    <div class="standings-grid">
+    <div class="standings-grid-wrapper">
+    <div class="standings-grid standings-grid-header">
         <span class="standings-logo team-logo"> </span>
         <span class="short-text full-text"> Team </span>
         <span class="elo short-text full-text"> ELO </span>
@@ -22,7 +22,7 @@
 
 {% for team in grade.teams %}
 
-<div class="standings-grid">
+<div class="standings-grid-team standings-grid standings-grid-{% cycle 'odd', 'even' %}">
     <span class="standings-logo team-logo"> <img src="assets/team_logos/{{ team.team_name }}.png" alt="{{ team.team_name }} Logo"> </span>
     <span class="team-name"> {{ team.team_name }} </span>
     <span class="stat-tag"> ELO: </span><span class="elo stat"> {{ team.elo }} </span>
@@ -32,5 +32,6 @@
     <span class="stat-tag"> R%: </span><span class="runs-percentage stat" > {{ team.runs_percentage }} </span>
     </div>
 {% endfor %}
+    </div>
 </details>
 {% endfor %}
