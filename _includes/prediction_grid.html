@@ -10,7 +10,7 @@
     <div class="predictions-grid-card">
         <span class="team-logo home-logo"><img src="assets/team_logos/{{ game.team_home }}.png" alt="{{ game.team_home }} Logo"></span>
         <span class="home-name">{{ game.team_home }}</span>
-        <span class="at-symbol" style="font-size: 20px">@</span>
+        <span class="at-symbol">@</span>
         <span class="away-name">{{ game.team_away }}</span>
         <span class="chance-bar-wrapper">
             <div class="{{ game.team_away | replace: " ", "-"  }} chance-bar chance-bar-right" style="width:{{ game.chance_away }}%;">{{ game.chance_away }}%</div>
