@@ -1,5 +1,5 @@
-----
-<h2>Prediction Tables</h2>
+
+<div class="predictions-grid-wrapper">
 
 {% for grade in site.data.next_round_predictions.grades %}
 {% if grade.games.size > 0 %}
@@ -7,7 +7,7 @@
     <summary>{{ grade.name }} - Round {{ grade.round_number }}</summary>
     <hr>
     {% for game in grade.games %}
-    <div class="predictions-grid">
+    <div class="predictions-grid-card">
         <span class="team-logo home-logo"><img src="assets/team_logos/{{ game.team_home }}.png" alt="{{ game.team_home }} Logo"></span>
         <span class="home-name">{{ game.team_home }}</span>
         <span class="at-symbol" style="font-size: 20px">@</span>
@@ -25,3 +25,4 @@
 </details>
 {% endif %}
 {% endfor %}
+</div>

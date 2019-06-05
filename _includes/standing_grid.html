@@ -1,11 +1,10 @@
-----
 
-<h2>Standing Tables</h2>
+<div class="standings-grid-wrapper">
 
 {% for grade in site.data.current_standings.grades %}
 <details>
     <summary>{{ grade.name }} - Round {{grade.round_number}}</summary>
-    <div class="standings-grid-wrapper">
+    <div class="standings-grid-card">
     <div class="standings-grid standings-grid-header">
         <span class="standings-logo team-logo"> </span>
         <span class="short-text full-text"> Team </span>

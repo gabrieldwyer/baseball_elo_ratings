@@ -162,7 +162,7 @@ footer {
 @import "team_colours";
 
 
-.predictions-grid {
+.predictions-grid-card {
     font-family: $monospace;
     margin: 20px;
     padding: 20px 40px;
@@ -198,7 +198,7 @@ footer {
     margin-bottom:10px;
 }
 
-.standings-grid-wrapper {
+.standings-grid-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
     padding: 10px, 0px;
@@ -277,3 +277,49 @@ footer {
 
 //@media only screen and (min-width:64em) { /* big landscape tablets, laptops, and desktops */ }
 //@media only screen and (min-width:80em) { /* hi-res laptops and desktops */ }
+
+input {
+    display: none;
+}
+
+.toggle {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-transform: uppercase;
+    width: auto;
+}
+
+#predictions-toggle + .toggle {
+    border-top: 1px black solid;
+    border-left: 1px black solid;
+    border-bottom: 1px black solid;
+    border-radius: 4px 0px 0px 4px;
+}
+
+#standings-toggle + .toggle {
+    border: 1px black solid;
+    border-radius: 0px 4px 4px 0px;
+}
+
+#standings-toggle:checked + .toggle, #predictions-toggle:checked + .toggle {
+  background-color: lightgray;
+  font-weight: bold;
+}
+
+
+#predictions-toggle ~ .predictions-grid-wrapper {
+    display: none;
+}
+
+#standings-toggle ~ .standings-grid-wrapper {
+    display: none;
+}
+
+#predictions-toggle:checked ~ .predictions-grid-wrapper {
+    display: block;
+}
+
+#standings-toggle:checked ~ .standings-grid-wrapper {
+    display: block;
+}
