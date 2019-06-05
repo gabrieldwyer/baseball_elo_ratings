@@ -11,18 +11,21 @@ While future efforts will be more heavily and cleanly automated, for the time be
 
 Also note that the model is nowhere near optimised - it is more than likely that changes to the model will greatly affect the predictions. Take these as a current best guess...
 
-----
+<div>
+  <input type="radio" name="my-input" id="predictions-toggle"><label for="predictions-toggle" class="toggle">Predictions</label><input type="radio" name="my-input" id="standings-toggle"><label for="standings-toggle" class="toggle">Standings</label>
 
 {%- include prediction_grid.html -%}
 
-----
-
 {%- include standing_grid.html -%}
 
-----
-Updated: {{ site.data.next_round_predictions.metadata.updated }}
+</div>
 
-----
+<hr>
+
+<p>Updated: {{ site.data.next_round_predictions.metadata.updated }}</p>
+
+<hr>
+
 
 <details>
 <summary>A note on permissions.</summary>
