@@ -1,5 +1,5 @@
 metadata:
-  updated: 2019-06-02
+  updated: 2019-06-05
 grades:
   -
     name: 'A Fourths'
@@ -194,30 +194,10 @@ grades:
     round_number: 9
     games:
   -
-    name: 'City West Under 13'
-    round_number: 6
-    games:
-  -
-    name: 'City West Under 15'
-    round_number: 7
-    games:
-  -
     name: 'D Grade'
     round_number: 9
     games:
   -
     name: 'D Reserves'
     round_number: 9
-    games:
-  -
-    name: 'R D Under 13'
-    round_number: 7
-    games:
-  -
-    name: 'Under 17 Div 1'
-    round_number: 7
-    games:
-  -
-    name: 'Under 17 Div 2'
-    round_number: 7
     games:
