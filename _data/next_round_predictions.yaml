@@ -1,5 +1,5 @@
 metadata:
-  updated: 2019-06-05
+  updated: 2019-06-08
 grades:
   -
     name: 'A Fourths'
@@ -189,15 +189,130 @@ grades:
     name: 'C Grade'
     round_number: 9
     games:
+    -
+      team_home: 'Doncaster'
+      team_away: 'St Kilda Black'
+      chance_home: 55
+      chance_away: 45
+    -
+      team_home: 'St Kilda Red'
+      team_away: 'Croydon'
+      chance_home: 11
+      chance_away: 89
+    -
+      team_home: 'Waverley'
+      team_away: 'Glen Iris'
+      chance_home: 23
+      chance_away: 77
+    -
+      team_home: 'Wheelers Hill'
+      team_away: 'North Balwyn'
+      chance_home: 90
+      chance_away: 10
   -
     name: 'C Reserves'
     round_number: 9
     games:
+    -
+      team_home: 'Doncaster'
+      team_away: 'St Kilda'
+      chance_home: 23
+      chance_away: 77
+    -
+      team_home: 'Research'
+      team_away: 'Northcote Lions'
+      chance_home: 73
+      chance_away: 27
+    -
+      team_home: 'Waverley'
+      team_away: 'Greensborough'
+      chance_home: 51
+      chance_away: 49
+    -
+      team_home: 'Wheelers Hill'
+      team_away: 'North Balwyn'
+      chance_home: 12
+      chance_away: 88
   -
     name: 'D Grade'
     round_number: 9
     games:
+    -
+      team_home: 'Essendon'
+      team_away: 'Latrobe University Black'
+      chance_home: 89
+      chance_away: 11
+    -
+      team_home: 'Forest Hill Gray'
+      team_away: 'Melbourne University'
+      chance_home: 96
+      chance_away: 4
+    -
+      team_home: 'Knox'
+      team_away: 'Diamond Creek'
+      chance_home: 40
+      chance_away: 60
+    -
+      team_home: 'Latrobe University White'
+      team_away: 'Footscray'
+      chance_home: 62
+      chance_away: 38
+    -
+      team_home: 'Mordialloc'
+      team_away: 'Greensborough'
+      chance_home: 93
+      chance_away: 7
+    -
+      team_home: 'North Coburg Rebels'
+      team_away: 'Monash University'
+      chance_home: 85
+      chance_away: 15
+    -
+      team_home: 'Watsonia'
+      team_away: 'Forest Hill Blue'
+      chance_home: 81
+      chance_away: 19
   -
     name: 'D Reserves'
     round_number: 9
     games:
+    -
+      team_home: 'Forest Hill Gray'
+      team_away: 'Melbourne University Blue'
+      chance_home: 54
+      chance_away: 46
+    -
+      team_home: 'Forest Hill White'
+      team_away: 'Melbourne University White'
+      chance_home: 22
+      chance_away: 78
+    -
+      team_home: 'Knox'
+      team_away: 'Diamond Creek'
+      chance_home: 87
+      chance_away: 13
+    -
+      team_home: 'La Trobe University'
+      team_away: 'Footscray'
+      chance_home: 34
+      chance_away: 66
+    -
+      team_home: 'Mitchell Majors'
+      team_away: 'Croydon'
+      chance_home: 32
+      chance_away: 68
+    -
+      team_home: 'North Coburg Rebels'
+      team_away: 'Monash University'
+      chance_home: 78
+      chance_away: 22
+    -
+      team_home: 'Ringwood'
+      team_away: 'Heathmont'
+      chance_home: 87
+      chance_away: 13
+    -
+      team_home: 'Watsonia'
+      team_away: 'Forest Hill Blue'
+      chance_home: 64
+      chance_away: 36
