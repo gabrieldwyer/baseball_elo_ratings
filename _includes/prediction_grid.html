@@ -12,13 +12,18 @@
         <span class="home-name">{{ game.team_home }}</span>
         <span class="at-symbol">@</span>
         <span class="away-name">{{ game.team_away }}</span>
-        <span class="chance-bar-wrapper">
-            <div class="{{ game.team_away | replace: " ", "-"  }} chance-bar chance-bar-right" style="width:{{ game.chance_away }}%;">{{ game.chance_away }}%</div>
-            <div class="chance-bar chance-bar-divider"></div>
-            <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;">{{ game.chance_home }}%</div> </span>
         <span class="away-name"></span>
         <span class="team-logo away-logo"><img src="assets/team_logos/{{ game.team_away }}.png" alt="{{ game.team_away }} Logo"></span>
 
+        <span class="chance-bar-percent">
+            <div class="{{ game.team_away | replace: " ", "-" }} chance-bar-percent-left">{{ game.chance_away }}%</div>
+            <div class="{{ game.team_home | replace: " ", "-" }} chance-bar-percent-right">{{ game.chance_home }}%</div>
+        </span>
+        <span class="chance-bar-graphic chance-bar-wrapper">
+            <div class="{{ game.team_away | replace: " ", "-"  }} chance-bar chance-bar-right" style="width:{{ game.chance_away }}%;"></div>
+            <div class="chance-bar chance-bar-divider"></div>
+            <div class="{{ game.team_home | replace: " ", "-" }} chance-bar chance-bar-left" style="width:{{ game.chance_home }}%;"></div>
+        </span>
     </div>
     {% endfor %}
     <hr>

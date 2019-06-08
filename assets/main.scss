@@ -144,8 +144,8 @@ footer {
 
 .chance-bar-divider {
     padding: 0px;
-    width: 0.1em;
-    height: 3em;
+    width: 2px;
+    height: 2em;
     background-color: black;
     margin: 2px;
     border-radius: 2px;
@@ -175,11 +175,10 @@ footer {
 .predictions-grid-card {
     font-family: $monospace;
     padding: 0.5em 1em;
-    //border-bottom: 1px solid black;
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: auto auto auto auto auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto;
     align-items: center;
     //text-align: justify;
     test-justify: distribute;
@@ -222,7 +221,9 @@ footer {
 .home-logo {grid-area: 1 / 5 / 1 / 5; padding: 5px;}
 .away-name {grid-area: 2 / 1 / 2 / 1; direction: ltr; word-wrap: break-word;}
 .away-logo {grid-area: 1 / 1 / 1 / 1; padding: 5px;}
-.chance-bar-wrapper {grid-area: 3 / 1 / 3 / 6;}
+// .chance-bar-wrapper {grid-area: 3 / 1 / 4 / 6; width: 100%;}
+.chance-bar-percent {grid-area: 4 / 1 / 4 / 6; width: 100%;}
+.chance-bar-graphic {grid-area: 3 / 1 / 3 / 6; width: 100%;}
 
 .short-text {display: none;}
 .full-text {display: none;}
@@ -283,6 +284,7 @@ footer {
 }
 
 @media only screen and (min-width:1200px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .predictions-grid-card {grid-template-columns: 130px 1fr 1fr 1fr 130px;}
     .wrapper {margin: 5% 15% 1%;}
     .short-text {display: none;}
     .full-text {display:inline;}
@@ -292,6 +294,7 @@ footer {
     .away-name {grid-area: 1 / 2 / 1 / 2; justify-self: right;}
     .away-logo {grid-area: 2 / 1 / 2 / 1; justify-self: right; margin: 10px;}
     .chance-bar-wrapper {grid-area: 2 / 2 / 2 / 5;}
+    .chance-bar-percent {grid-area: 3 / 2 / 3 / 5;}
 }
 
 //@media only screen and (min-width:64em) { /* big landscape tablets, laptops, and desktops */ }
@@ -342,4 +345,18 @@ input {
 
 #standings-toggle:checked ~ .standings-grid-wrapper {
     display: block;
+}
+
+.chance-bar-percent {
+    font-weight: bold;
+}
+
+.chance-bar-percent-left {
+    float: left;
+    background-color: #EEEEEE;
+}
+
+.chance-bar-percent-right {
+    float: right;
+    background-color: #EEEEEE;
 }
