@@ -1,313 +1,313 @@
 metadata:
-  updated: 2019-07-13
+  updated: 2019-07-15
 grades:
   -
     name: 'A Fourths'
-    round_number: 12
+    round_number: 14
     games:
     -
       team_home: 'Bundoora'
-      team_away: 'Knox'
-      chance_home: 7
-      chance_away: 93
-    -
-      team_home: 'GMBC'
       team_away: 'Mitchell Majors'
-      chance_home: 24
-      chance_away: 76
-    -
-      team_home: 'Melbourne University'
-      team_away: 'Forest Hill'
-      chance_home: 6
-      chance_away: 94
-    -
-      team_home: 'North Balwyn'
-      team_away: 'Watsonia'
-      chance_home: 9
-      chance_away: 91
-    -
-      team_home: 'Ringwood'
-      team_away: 'Heathmont'
-      chance_home: 62
-      chance_away: 38
-  -
-    name: 'A Grade'
-    round_number: 12
-    games:
-    -
-      team_home: 'Forest Hill'
-      team_away: 'Research'
-      chance_home: 52
-      chance_away: 48
-    -
-      team_home: 'Melbourne University'
-      team_away: 'Greensborough'
-      chance_home: 75
-      chance_away: 25
-    -
-      team_home: 'Watsonia'
-      team_away: 'North Balwyn'
       chance_home: 46
       chance_away: 54
     -
-      team_home: 'Waverley'
-      team_away: 'GMBC'
-      chance_home: 19
-      chance_away: 81
-    -
-      team_home: 'Heathmont'
-      team_away: 'Ringwood'
-      chance_home: 50
-      chance_away: 50
-  -
-    name: 'A Reserves'
-    round_number: 12
-    games:
-    -
-      team_home: 'Forest Hill'
-      team_away: 'Research'
-      chance_home: 49
-      chance_away: 51
-    -
-      team_home: 'Melbourne University'
-      team_away: 'Greensborough'
-      chance_home: 62
-      chance_away: 38
-    -
-      team_home: 'Watsonia'
-      team_away: 'North Balwyn'
-      chance_home: 6
-      chance_away: 94
-    -
-      team_home: 'Waverley'
-      team_away: 'GMBC'
-      chance_home: 34
-      chance_away: 66
-    -
-      team_home: 'Heathmont'
-      team_away: 'Ringwood'
-      chance_home: 70
-      chance_away: 30
-  -
-    name: 'A Thirds'
-    round_number: 12
-    games:
-    -
-      team_home: 'Heathmont'
-      team_away: 'Ringwood'
-      chance_home: 20
-      chance_away: 80
-    -
-      team_home: 'Bundoora'
-      team_away: 'Knox'
-      chance_home: 14
-      chance_away: 86
-    -
       team_home: 'GMBC'
-      team_away: 'Mitchell Majors'
-      chance_home: 30
-      chance_away: 70
-    -
-      team_home: 'Melbourne University'
       team_away: 'Forest Hill'
-      chance_home: 8
-      chance_away: 92
+      chance_home: 57
+      chance_away: 43
+    -
+      team_home: 'Knox'
+      team_away: 'Heathmont'
+      chance_home: 51
+      chance_away: 49
     -
       team_home: 'North Balwyn'
+      team_away: 'Melbourne University'
+      chance_home: 43
+      chance_away: 57
+    -
+      team_home: 'Ringwood'
       team_away: 'Watsonia'
-      chance_home: 31
-      chance_away: 69
-  -
-    name: 'B Grade'
-    round_number: 12
-    games:
-    -
-      team_home: 'Croydon'
-      team_away: 'Doncaster'
-      chance_home: 52
-      chance_away: 48
-    -
-      team_home: 'Footscray'
-      team_away: 'Diamond Creek'
-      chance_home: 48
-      chance_away: 52
-    -
-      team_home: 'La Trobe University'
-      team_away: 'North Coburg Rebels'
-      chance_home: 17
-      chance_away: 83
-    -
-      team_home: 'Monash University'
-      team_away: 'Port Melbourne'
-      chance_home: 16
-      chance_away: 84
-    -
-      team_home: 'St Kilda'
-      team_away: 'Knox'
-      chance_home: 2
-      chance_away: 98
-    -
-      team_home: 'Werribee'
-      team_away: 'Westgarth'
-      chance_home: 73
-      chance_away: 27
-  -
-    name: 'B Reserves'
-    round_number: 12
-    games:
-    -
-      team_home: 'Croydon'
-      team_away: 'Doncaster'
-      chance_home: 34
-      chance_away: 66
-    -
-      team_home: 'Footscray'
-      team_away: 'Diamond Creek'
-      chance_home: 19
-      chance_away: 81
-    -
-      team_home: 'La Trobe University'
-      team_away: 'North Coburg Rebels'
-      chance_home: 64
-      chance_away: 36
-    -
-      team_home: 'Monash University'
-      team_away: 'Port Melbourne'
-      chance_home: 54
-      chance_away: 46
-    -
-      team_home: 'St Kilda'
-      team_away: 'Knox'
-      chance_home: 5
-      chance_away: 95
-    -
-      team_home: 'Werribee'
-      team_away: 'Westgarth'
       chance_home: 13
       chance_away: 87
   -
-    name: 'C Grade'
-    round_number: 12
+    name: 'A Grade'
+    round_number: 14
     games:
     -
-      team_home: 'St Kilda Red'
-      team_away: 'St Kilda Black'
-      chance_home: 62
-      chance_away: 38
+      team_home: 'Forest Hill'
+      team_away: 'GMBC'
+      chance_home: 24
+      chance_away: 76
     -
-      team_home: 'Croydon'
+      team_home: 'Heathmont'
+      team_away: 'Melbourne University'
+      chance_home: 83
+      chance_away: 17
+    -
+      team_home: 'Research'
       team_away: 'North Balwyn'
-      chance_home: 98
-      chance_away: 2
+      chance_home: 9
+      chance_away: 91
     -
-      team_home: 'Doncaster'
-      team_away: 'Glen Iris'
+      team_home: 'Watsonia'
+      team_away: 'Ringwood'
+      chance_home: 44
+      chance_away: 56
+    -
+      team_home: 'Waverley'
+      team_away: 'Greensborough'
+      chance_home: 47
+      chance_away: 53
+  -
+    name: 'A Reserves'
+    round_number: 14
+    games:
+    -
+      team_home: 'Forest Hill'
+      team_away: 'GMBC'
+      chance_home: 5
+      chance_away: 95
+    -
+      team_home: 'Heathmont'
+      team_away: 'Melbourne University'
+      chance_home: 84
+      chance_away: 16
+    -
+      team_home: 'Research'
+      team_away: 'North Balwyn'
       chance_home: 21
       chance_away: 79
     -
+      team_home: 'Watsonia'
+      team_away: 'Ringwood'
+      chance_home: 7
+      chance_away: 93
+    -
       team_home: 'Waverley'
-      team_away: 'Wheelers Hill'
-      chance_home: 16
-      chance_away: 84
+      team_away: 'Greensborough'
+      chance_home: 85
+      chance_away: 15
   -
-    name: 'C Reserves'
-    round_number: 12
+    name: 'A Thirds'
+    round_number: 14
     games:
     -
-      team_home: 'Doncaster'
-      team_away: 'Northcote Lions'
-      chance_home: 11
-      chance_away: 89
+      team_home: 'Bundoora'
+      team_away: 'Mitchell Majors'
+      chance_home: 17
+      chance_away: 83
     -
-      team_home: 'Greensborough'
+      team_home: 'GMBC'
+      team_away: 'Forest Hill'
+      chance_home: 6
+      chance_away: 94
+    -
+      team_home: 'Knox'
+      team_away: 'Heathmont'
+      chance_home: 22
+      chance_away: 78
+    -
+      team_home: 'North Balwyn'
+      team_away: 'Melbourne University'
+      chance_home: 92
+      chance_away: 8
+    -
+      team_home: 'Ringwood'
+      team_away: 'Watsonia'
+      chance_home: 18
+      chance_away: 82
+  -
+    name: 'B Grade'
+    round_number: 14
+    games:
+    -
+      team_home: 'Croydon'
+      team_away: 'Knox'
+      chance_home: 29
+      chance_away: 71
+    -
+      team_home: 'Doncaster'
+      team_away: 'Port Melbourne'
+      chance_home: 78
+      chance_away: 22
+    -
+      team_home: 'Footscray'
+      team_away: 'La Trobe University'
+      chance_home: 46
+      chance_away: 54
+    -
+      team_home: 'Monash University'
+      team_away: 'St Kilda'
+      chance_home: 87
+      chance_away: 13
+    -
+      team_home: 'Werribee'
+      team_away: 'North Coburg Rebels'
+      chance_home: 76
+      chance_away: 24
+    -
+      team_home: 'Westgarth'
+      team_away: 'Diamond Creek'
+      chance_home: 28
+      chance_away: 72
+  -
+    name: 'B Reserves'
+    round_number: 14
+    games:
+    -
+      team_home: 'Croydon'
+      team_away: 'Knox'
+      chance_home: 6
+      chance_away: 94
+    -
+      team_home: 'Doncaster'
+      team_away: 'Port Melbourne'
+      chance_home: 91
+      chance_away: 9
+    -
+      team_home: 'Footscray'
+      team_away: 'La Trobe University'
+      chance_home: 28
+      chance_away: 72
+    -
+      team_home: 'Monash University'
       team_away: 'St Kilda'
       chance_home: 70
       chance_away: 30
     -
-      team_home: 'Research'
-      team_away: 'North Balwyn'
-      chance_home: 81
-      chance_away: 19
+      team_home: 'Werribee'
+      team_away: 'North Coburg Rebels'
+      chance_home: 3
+      chance_away: 97
     -
-      team_home: 'Waverley'
-      team_away: 'Wheelers Hill'
-      chance_home: 95
-      chance_away: 5
+      team_home: 'Westgarth'
+      team_away: 'Diamond Creek'
+      chance_home: 13
+      chance_away: 87
   -
-    name: 'D Grade'
-    round_number: 12
-    games:
-    -
-      team_home: 'Essendon'
-      team_away: 'Melbourne University'
-      chance_home: 87
-      chance_away: 13
-    -
-      team_home: 'Diamond Creek'
-      team_away: 'Mordialloc'
-      chance_home: 48
-      chance_away: 52
-    -
-      team_home: 'Forest Hill Blue'
-      team_away: 'Monash University'
-      chance_home: 19
-      chance_away: 81
-    -
-      team_home: 'Knox'
-      team_away: 'Watsonia'
-      chance_home: 47
-      chance_away: 53
-    -
-      team_home: 'Latrobe University Black'
-      team_away: 'Footscray'
-      chance_home: 19
-      chance_away: 81
-    -
-      team_home: 'North Coburg Rebels'
-      team_away: 'Latrobe University White'
-      chance_home: 95
-      chance_away: 5
-  -
-    name: 'D Reserves'
-    round_number: 12
+    name: 'C Grade'
+    round_number: 14
     games:
     -
       team_home: 'Croydon'
-      team_away: 'Melbourne University White'
-      chance_home: 59
-      chance_away: 41
+      team_away: 'Glen Iris'
+      chance_home: 82
+      chance_away: 18
     -
-      team_home: 'Diamond Creek'
-      team_away: 'Ringwood'
-      chance_home: 7
-      chance_away: 93
+      team_home: 'St Kilda Black'
+      team_away: 'Wheelers Hill'
+      chance_home: 52
+      chance_away: 48
     -
-      team_home: 'Forest Hill Blue'
-      team_away: 'Monash University'
-      chance_home: 98
-      chance_away: 2
+      team_home: 'St Kilda Red'
+      team_away: 'Doncaster'
+      chance_home: 57
+      chance_away: 43
     -
-      team_home: 'Forest Hill White'
-      team_away: 'Melbourne University Blue'
+      team_home: 'Waverley'
+      team_away: 'North Balwyn'
+      chance_home: 74
+      chance_away: 26
+  -
+    name: 'C Reserves'
+    round_number: 14
+    games:
+    -
+      team_home: 'Greensborough'
+      team_away: 'Research'
+      chance_home: 41
+      chance_away: 59
+    -
+      team_home: 'Northcote Lions'
+      team_away: 'Doncaster'
       chance_home: 90
       chance_away: 10
     -
-      team_home: 'Heathmont'
+      team_home: 'St Kilda'
+      team_away: 'Wheelers Hill'
+      chance_home: 80
+      chance_away: 20
+    -
+      team_home: 'Waverley'
+      team_away: 'North Balwyn'
+      chance_home: 85
+      chance_away: 15
+  -
+    name: 'D Grade'
+    round_number: 14
+    games:
+    -
+      team_home: 'Diamond Creek'
       team_away: 'Footscray'
-      chance_home: 94
-      chance_away: 6
+      chance_home: 10
+      chance_away: 90
+    -
+      team_home: 'Forest Hill Blue'
+      team_away: 'Latrobe University Black'
+      chance_home: 40
+      chance_away: 60
     -
       team_home: 'Knox'
-      team_away: 'Watsonia'
-      chance_home: 69
-      chance_away: 31
+      team_away: 'Mordialloc'
+      chance_home: 40
+      chance_away: 60
     -
-      team_home: 'Mitchell Majors'
+      team_home: 'Latrobe University White'
       team_away: 'Forest Hill Gray'
-      chance_home: 64
-      chance_away: 36
+      chance_home: 11
+      chance_away: 89
+    -
+      team_home: 'Melbourne University'
+      team_away: 'Monash University'
+      chance_home: 30
+      chance_away: 70
     -
       team_home: 'North Coburg Rebels'
-      team_away: 'La Trobe University'
-      chance_home: 36
-      chance_away: 64
+      team_away: 'Watsonia'
+      chance_home: 84
+      chance_away: 16
+  -
+    name: 'D Reserves'
+    round_number: 14
+    games:
+    -
+      team_home: 'Forest Hill Blue'
+      team_away: 'Melbourne University White'
+      chance_home: 48
+      chance_away: 52
+    -
+      team_home: 'Croydon'
+      team_away: 'Ringwood'
+      chance_home: 17
+      chance_away: 83
+    -
+      team_home: 'Diamond Creek'
+      team_away: 'Footscray'
+      chance_home: 43
+      chance_away: 57
+    -
+      team_home: 'Knox'
+      team_away: 'Forest Hill White'
+      chance_home: 96
+      chance_away: 4
+    -
+      team_home: 'La Trobe University'
+      team_away: 'Forest Hill Gray'
+      chance_home: 44
+      chance_away: 56
+    -
+      team_home: 'Melbourne University Blue'
+      team_away: 'Monash University'
+      chance_home: 38
+      chance_away: 62
+    -
+      team_home: 'Mitchell Majors'
+      team_away: 'Heathmont'
+      chance_home: 52
+      chance_away: 48
+    -
+      team_home: 'North Coburg Rebels'
+      team_away: 'Watsonia'
+      chance_home: 20
+      chance_away: 80
